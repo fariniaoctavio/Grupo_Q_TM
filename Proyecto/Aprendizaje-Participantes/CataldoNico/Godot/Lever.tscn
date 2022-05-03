@@ -1,0 +1,113 @@
+[gd_scene load_steps=13 format=2]
+
+[ext_resource path="res://Blender/formas2.obj" type="ArrayMesh" id=1]
+[ext_resource path="res://scripts/KinematicBody.gd" type="Script" id=2]
+[ext_resource path="res://Blender/piso.obj" type="ArrayMesh" id=3]
+
+[sub_resource type="BoxShape" id=5]
+
+[sub_resource type="BoxShape" id=8]
+
+[sub_resource type="BoxShape" id=9]
+
+[sub_resource type="CubeMesh" id=10]
+
+[sub_resource type="Skin" id=11]
+
+[sub_resource type="SpatialMaterial" id=12]
+flags_transparent = true
+albedo_color = Color( 0.0470588, 0, 0, 0 )
+
+[sub_resource type="BoxShape" id=13]
+
+[sub_resource type="CubeMesh" id=14]
+
+[sub_resource type="SpatialMaterial" id=15]
+flags_transparent = true
+albedo_color = Color( 0.0470588, 0, 0, 0 )
+
+[node name="Lever" type="Spatial"]
+
+[node name="KinematicBody" type="KinematicBody" parent="."]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0 )
+script = ExtResource( 2 )
+
+[node name="CollisionShape" type="CollisionShape" parent="KinematicBody"]
+transform = Transform( 1, 0, 0, 0, 0.5, 0, 0, 0, 1, 0, 0, 0 )
+shape = SubResource( 5 )
+
+[node name="MeshInstance" type="MeshInstance" parent="KinematicBody"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0.5, 0, -0.5 )
+mesh = ExtResource( 1 )
+skeleton = NodePath("../..")
+material/0 = null
+
+[node name="StaticBody" type="StaticBody" parent="."]
+constant_angular_velocity = Vector3( 6, 0.5, 6 )
+
+[node name="CollisionShape" type="CollisionShape" parent="StaticBody"]
+transform = Transform( 6, 0, 0, 0, 0.5, 0, 0, 0, 6, 0, 0, 0 )
+shape = SubResource( 8 )
+
+[node name="piso" type="MeshInstance" parent="StaticBody"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -5.5, 0, 5.5 )
+mesh = ExtResource( 3 )
+material/0 = null
+
+[node name="StaticBody2" type="StaticBody" parent="."]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 12, 6.5, 1, 0 )
+
+[node name="CollisionShape" type="CollisionShape" parent="StaticBody2"]
+transform = Transform( 0.5, 0, 0, 0, 0.5, 0, 0, 0, 0.5, 0, 0, 0 )
+visible = false
+shape = SubResource( 9 )
+
+[node name="MeshInstance" type="MeshInstance" parent="StaticBody2"]
+transform = Transform( 0.5, 0, 0, 0, 0.5, 0, 0, 0, 0.5, 0, 0, 0 )
+mesh = SubResource( 10 )
+skin = SubResource( 11 )
+material/0 = SubResource( 12 )
+
+[node name="StaticBody3" type="StaticBody" parent="."]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 12, -6.5, 1, 0 )
+
+[node name="CollisionShape" type="CollisionShape" parent="StaticBody3"]
+transform = Transform( 0.5, 0, 0, 0, 0.5, 0, 0, 0, 0.5, 0, 0, 0 )
+visible = false
+shape = SubResource( 9 )
+
+[node name="MeshInstance" type="MeshInstance" parent="StaticBody3"]
+transform = Transform( 0.5, 0, 0, 0, 0.5, 0, 0, 0, 0.5, 0, 0, 0 )
+mesh = SubResource( 10 )
+skin = SubResource( 11 )
+material/0 = SubResource( 12 )
+
+[node name="StaticBody4" type="StaticBody" parent="."]
+transform = Transform( 6, 0, 0, 0, 0.5, 0, 0, 0, 0.5, 0, 1, 6.5 )
+
+[node name="CollisionShape" type="CollisionShape" parent="StaticBody4"]
+visible = false
+shape = SubResource( 13 )
+
+[node name="MeshInstance" type="MeshInstance" parent="StaticBody4"]
+mesh = SubResource( 14 )
+material/0 = SubResource( 15 )
+
+[node name="StaticBody5" type="StaticBody" parent="."]
+transform = Transform( 6, 0, 0, 0, 0.5, 0, 0, 0, 0.5, 0, 1, -6.5 )
+
+[node name="CollisionShape" type="CollisionShape" parent="StaticBody5"]
+visible = false
+shape = SubResource( 13 )
+
+[node name="MeshInstance" type="MeshInstance" parent="StaticBody5"]
+mesh = SubResource( 14 )
+material/0 = SubResource( 15 )
+
+[node name="Camera" type="Camera" parent="."]
+transform = Transform( 0.999989, -0.00157115, 0.00446126, -0.00236141, 0.651411, 0.758721, -0.00409818, -0.758723, 0.6514, 0.186625, 13.4888, 9.41267 )
+
+[node name="DirectionalLight" type="DirectionalLight" parent="."]
+transform = Transform( -0.0899953, -0.349995, 0.932419, -0.0336246, 0.936752, 0.348376, -0.995374, 0, -0.0960716, 11.0149, 11.3405, 0 )
+light_color = Color( 0.960784, 0.952941, 0.964706, 1 )
+directional_shadow_max_distance = 50.0

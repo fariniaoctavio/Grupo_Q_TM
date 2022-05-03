@@ -1,0 +1,20 @@
+[remap]
+
+importer="wavefront_obj"
+type="Mesh"
+path="res://.import/piso.obj-e92d2d1c886b1459a6a815d9c0ccf72c.mesh"
+
+[deps]
+
+files=[ "res://.import/piso.obj-e92d2d1c886b1459a6a815d9c0ccf72c.mesh" ]
+
+source_file="res://Blender/piso.obj"
+dest_files=[ "res://.import/piso.obj-e92d2d1c886b1459a6a815d9c0ccf72c.mesh", "res://.import/piso.obj-e92d2d1c886b1459a6a815d9c0ccf72c.mesh" ]
+
+[params]
+
+generate_tangents=true
+scale_mesh=Vector3( 1, 1, 1 )
+offset_mesh=Vector3( 0, 0, 0 )
+octahedral_compression=true
+optimize_mesh_flags=4286
