@@ -3,5 +3,15 @@
 [node name="Tetris" type="CenterContainer"]
 anchor_right = 1.0
 anchor_bottom = 1.0
-margin_right = -424.0
-margin_bottom = 200.0
+margin_left = -3.5
+margin_top = 8.5
+margin_right = -427.5
+margin_bottom = 208.5
+size_flags_horizontal = 0
+size_flags_vertical = 0
+
+[node name="PanelContainer" type="PanelContainer" parent="."]
+margin_left = 293.0
+margin_top = 393.0
+margin_right = 307.0
+margin_bottom = 407.0
