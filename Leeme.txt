@@ -1,0 +1,26 @@
+## Integrantes Grupo Q - TM:
+- Minati Franco
+- Cataldo Nicolas
+- Fariña Octavio
+
+## Proyecto: Tetris 2D Multijugador
+
+#### Descripcion:
+
+
+### Stack Tecnológico:
+Todo el desarrollo del videojuego será realizado con herramientas de código abierto sobre el sistema operativo Ubuntu.
+
+Paradigma: Programacion Orientada a Objeto
+Utilizaremos el paradigma de la programación orientada a objetos ya que este facilitará el desarrollo del videojuego al poder representar los elementos que intervienen en el videojuego como objetos en nuestro código.
+
+Motor Gráfico: Godot
+Godot es un motor de videojuegos 2D y 3D multiplataforma, libre y de código abierto, publicado bajo la Licencia MIT y desarrollado por la comunidad de Godot. El motor es funcional en sistemas Windows, OS X, Linux y BSD. Permite exportar los videojuegos creados a PC, teléfonos móviles, y HTML5.
+
+Editor de Imagenes: GIMP
+Utilizaremos GIMP como editor de imagenes para general las sprites y contenido del videojuego. //TODO: completar descripcion de GIMP 
+
+Lenguaje de Programación: 
+Utilizaremos GDScript (llenguaje desarrollado para integrarse con el motor gráfico Godot)
+
+GDScript es un lenguaje de programación de alto nivel con tipado dinámico utilizado para crear contenido para Godot Engine. Utiliza una sintaxis similar a Python (los bloques están basados en la indentación y muchas palabras clave son similares). Su objetivo es optimizar e integrarse estrechamente con Godot Engine, permitiendo una gran flexibilidad en la creación e integración de contenido.
