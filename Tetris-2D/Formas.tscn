@@ -1,0 +1,512 @@
+[gd_scene load_steps=3 format=2]
+
+[ext_resource path="res://imagenes/tile.png" type="Texture" id=1]
+[ext_resource path="res://scripts/FormasScript.gd" type="Script" id=2]
+
+[node name="Formas" type="GridContainer"]
+margin_right = 40.0
+margin_bottom = 40.0
+custom_constants/hseparation = 20
+columns = 3
+script = ExtResource( 2 )
+
+[node name="L" type="GridContainer" parent="."]
+modulate = Color( 1, 0.470588, 0, 1 )
+margin_right = 86.0
+margin_bottom = 86.0
+columns = 3
+
+[node name="CeldaVacia" type="TextureRect" parent="L"]
+modulate = Color( 1, 1, 1, 0 )
+margin_right = 26.0
+margin_bottom = 26.0
+texture = ExtResource( 1 )
+
+[node name="CeldaVacia2" type="TextureRect" parent="L"]
+modulate = Color( 1, 1, 1, 0 )
+margin_left = 30.0
+margin_right = 56.0
+margin_bottom = 26.0
+texture = ExtResource( 1 )
+
+[node name="Celda" type="TextureRect" parent="L"]
+margin_left = 60.0
+margin_right = 86.0
+margin_bottom = 26.0
+texture = ExtResource( 1 )
+
+[node name="Celda2" type="TextureRect" parent="L"]
+margin_top = 30.0
+margin_right = 26.0
+margin_bottom = 56.0
+texture = ExtResource( 1 )
+
+[node name="Celda3" type="TextureRect" parent="L"]
+margin_left = 30.0
+margin_top = 30.0
+margin_right = 56.0
+margin_bottom = 56.0
+texture = ExtResource( 1 )
+
+[node name="Celda4" type="TextureRect" parent="L"]
+margin_left = 60.0
+margin_top = 30.0
+margin_right = 86.0
+margin_bottom = 56.0
+texture = ExtResource( 1 )
+
+[node name="CeldaVacia3" type="TextureRect" parent="L"]
+modulate = Color( 1, 1, 1, 0 )
+margin_top = 60.0
+margin_right = 26.0
+margin_bottom = 86.0
+texture = ExtResource( 1 )
+
+[node name="CeldaVacia4" type="TextureRect" parent="L"]
+modulate = Color( 1, 1, 1, 0 )
+margin_left = 30.0
+margin_top = 60.0
+margin_right = 56.0
+margin_bottom = 86.0
+texture = ExtResource( 1 )
+
+[node name="CeldaVacia5" type="TextureRect" parent="L"]
+modulate = Color( 1, 1, 1, 0 )
+margin_left = 60.0
+margin_top = 60.0
+margin_right = 86.0
+margin_bottom = 86.0
+texture = ExtResource( 1 )
+
+[node name="L invertida" type="GridContainer" parent="."]
+modulate = Color( 0, 0.25098, 1, 1 )
+self_modulate = Color( 0.0862745, 0, 0.352941, 1 )
+margin_left = 106.0
+margin_right = 192.0
+margin_bottom = 86.0
+columns = 3
+
+[node name="Celda" type="TextureRect" parent="L invertida"]
+margin_right = 26.0
+margin_bottom = 26.0
+texture = ExtResource( 1 )
+
+[node name="CeldaVacia" type="TextureRect" parent="L invertida"]
+modulate = Color( 1, 1, 1, 0 )
+margin_left = 30.0
+margin_right = 56.0
+margin_bottom = 26.0
+texture = ExtResource( 1 )
+
+[node name="CeldaVacia2" type="TextureRect" parent="L invertida"]
+modulate = Color( 1, 1, 1, 0 )
+margin_left = 60.0
+margin_right = 86.0
+margin_bottom = 26.0
+texture = ExtResource( 1 )
+
+[node name="Celda2" type="TextureRect" parent="L invertida"]
+margin_top = 30.0
+margin_right = 26.0
+margin_bottom = 56.0
+texture = ExtResource( 1 )
+
+[node name="Celda3" type="TextureRect" parent="L invertida"]
+margin_left = 30.0
+margin_top = 30.0
+margin_right = 56.0
+margin_bottom = 56.0
+texture = ExtResource( 1 )
+
+[node name="Celda4" type="TextureRect" parent="L invertida"]
+margin_left = 60.0
+margin_top = 30.0
+margin_right = 86.0
+margin_bottom = 56.0
+texture = ExtResource( 1 )
+
+[node name="CeldaVacia3" type="TextureRect" parent="L invertida"]
+modulate = Color( 1, 1, 1, 0 )
+margin_top = 60.0
+margin_right = 26.0
+margin_bottom = 86.0
+texture = ExtResource( 1 )
+
+[node name="CeldaVacia4" type="TextureRect" parent="L invertida"]
+modulate = Color( 1, 1, 1, 0 )
+margin_left = 30.0
+margin_top = 60.0
+margin_right = 56.0
+margin_bottom = 86.0
+texture = ExtResource( 1 )
+
+[node name="CeldaVacia5" type="TextureRect" parent="L invertida"]
+modulate = Color( 1, 1, 1, 0 )
+margin_left = 60.0
+margin_top = 60.0
+margin_right = 86.0
+margin_bottom = 86.0
+texture = ExtResource( 1 )
+
+[node name="S" type="GridContainer" parent="."]
+modulate = Color( 0.243137, 1, 0, 1 )
+margin_left = 212.0
+margin_right = 328.0
+margin_bottom = 86.0
+columns = 3
+
+[node name="CeldaVacia" type="TextureRect" parent="S"]
+modulate = Color( 1, 1, 1, 0 )
+margin_right = 26.0
+margin_bottom = 26.0
+texture = ExtResource( 1 )
+
+[node name="Celda" type="TextureRect" parent="S"]
+margin_left = 30.0
+margin_right = 56.0
+margin_bottom = 26.0
+texture = ExtResource( 1 )
+
+[node name="Celda2" type="TextureRect" parent="S"]
+margin_left = 60.0
+margin_right = 86.0
+margin_bottom = 26.0
+texture = ExtResource( 1 )
+
+[node name="Celda3" type="TextureRect" parent="S"]
+margin_top = 30.0
+margin_right = 26.0
+margin_bottom = 56.0
+texture = ExtResource( 1 )
+
+[node name="Celda4" type="TextureRect" parent="S"]
+margin_left = 30.0
+margin_top = 30.0
+margin_right = 56.0
+margin_bottom = 56.0
+texture = ExtResource( 1 )
+
+[node name="CeldaVacia2" type="TextureRect" parent="S"]
+modulate = Color( 1, 1, 1, 0 )
+margin_left = 60.0
+margin_top = 30.0
+margin_right = 86.0
+margin_bottom = 56.0
+texture = ExtResource( 1 )
+
+[node name="CeldaVacia3" type="TextureRect" parent="S"]
+modulate = Color( 1, 1, 1, 0 )
+margin_top = 60.0
+margin_right = 26.0
+margin_bottom = 86.0
+texture = ExtResource( 1 )
+
+[node name="CeldaVacia4" type="TextureRect" parent="S"]
+modulate = Color( 1, 1, 1, 0 )
+margin_left = 30.0
+margin_top = 60.0
+margin_right = 56.0
+margin_bottom = 86.0
+texture = ExtResource( 1 )
+
+[node name="CeldaVacia5" type="TextureRect" parent="S"]
+modulate = Color( 1, 1, 1, 0 )
+margin_left = 60.0
+margin_top = 60.0
+margin_right = 86.0
+margin_bottom = 86.0
+texture = ExtResource( 1 )
+
+[node name="Z" type="GridContainer" parent="."]
+modulate = Color( 1, 0, 0, 1 )
+margin_top = 90.0
+margin_right = 86.0
+margin_bottom = 206.0
+columns = 3
+
+[node name="Celda" type="TextureRect" parent="Z"]
+margin_right = 26.0
+margin_bottom = 26.0
+texture = ExtResource( 1 )
+
+[node name="Celda2" type="TextureRect" parent="Z"]
+margin_left = 30.0
+margin_right = 56.0
+margin_bottom = 26.0
+texture = ExtResource( 1 )
+
+[node name="CeldaVacia" type="TextureRect" parent="Z"]
+modulate = Color( 1, 1, 1, 0 )
+margin_left = 60.0
+margin_right = 86.0
+margin_bottom = 26.0
+texture = ExtResource( 1 )
+
+[node name="CeldaVacia2" type="TextureRect" parent="Z"]
+modulate = Color( 1, 1, 1, 0 )
+margin_top = 30.0
+margin_right = 26.0
+margin_bottom = 56.0
+texture = ExtResource( 1 )
+
+[node name="Celda3" type="TextureRect" parent="Z"]
+margin_left = 30.0
+margin_top = 30.0
+margin_right = 56.0
+margin_bottom = 56.0
+texture = ExtResource( 1 )
+
+[node name="Celda4" type="TextureRect" parent="Z"]
+margin_left = 60.0
+margin_top = 30.0
+margin_right = 86.0
+margin_bottom = 56.0
+texture = ExtResource( 1 )
+
+[node name="CeldaVacia3" type="TextureRect" parent="Z"]
+modulate = Color( 1, 1, 1, 0 )
+margin_top = 60.0
+margin_right = 26.0
+margin_bottom = 86.0
+texture = ExtResource( 1 )
+
+[node name="CeldaVacia4" type="TextureRect" parent="Z"]
+modulate = Color( 1, 1, 1, 0 )
+margin_left = 30.0
+margin_top = 60.0
+margin_right = 56.0
+margin_bottom = 86.0
+texture = ExtResource( 1 )
+
+[node name="CeldaVacia5" type="TextureRect" parent="Z"]
+modulate = Color( 1, 1, 1, 0 )
+margin_left = 60.0
+margin_top = 60.0
+margin_right = 86.0
+margin_bottom = 86.0
+texture = ExtResource( 1 )
+
+[node name="T" type="GridContainer" parent="."]
+modulate = Color( 0.968627, 0, 1, 1 )
+margin_left = 106.0
+margin_top = 90.0
+margin_right = 192.0
+margin_bottom = 206.0
+columns = 3
+
+[node name="CeldaVacia2" type="TextureRect" parent="T"]
+modulate = Color( 1, 1, 1, 0 )
+margin_right = 26.0
+margin_bottom = 26.0
+texture = ExtResource( 1 )
+
+[node name="Celda" type="TextureRect" parent="T"]
+margin_left = 30.0
+margin_right = 56.0
+margin_bottom = 26.0
+texture = ExtResource( 1 )
+
+[node name="CeldaVacia" type="TextureRect" parent="T"]
+modulate = Color( 1, 1, 1, 0 )
+margin_left = 60.0
+margin_right = 86.0
+margin_bottom = 26.0
+texture = ExtResource( 1 )
+
+[node name="Celda2" type="TextureRect" parent="T"]
+margin_top = 30.0
+margin_right = 26.0
+margin_bottom = 56.0
+texture = ExtResource( 1 )
+
+[node name="Celda3" type="TextureRect" parent="T"]
+margin_left = 30.0
+margin_top = 30.0
+margin_right = 56.0
+margin_bottom = 56.0
+texture = ExtResource( 1 )
+
+[node name="Celda4" type="TextureRect" parent="T"]
+margin_left = 60.0
+margin_top = 30.0
+margin_right = 86.0
+margin_bottom = 56.0
+texture = ExtResource( 1 )
+
+[node name="CeldaVacia3" type="TextureRect" parent="T"]
+modulate = Color( 1, 1, 1, 0 )
+margin_top = 60.0
+margin_right = 26.0
+margin_bottom = 86.0
+texture = ExtResource( 1 )
+
+[node name="CeldaVacia4" type="TextureRect" parent="T"]
+modulate = Color( 1, 1, 1, 0 )
+margin_left = 30.0
+margin_top = 60.0
+margin_right = 56.0
+margin_bottom = 86.0
+texture = ExtResource( 1 )
+
+[node name="CeldaVacia5" type="TextureRect" parent="T"]
+modulate = Color( 1, 1, 1, 0 )
+margin_left = 60.0
+margin_top = 60.0
+margin_right = 86.0
+margin_bottom = 86.0
+texture = ExtResource( 1 )
+
+[node name="I" type="GridContainer" parent="."]
+modulate = Color( 0, 0.952941, 1, 1 )
+margin_left = 212.0
+margin_top = 90.0
+margin_right = 328.0
+margin_bottom = 206.0
+columns = 4
+
+[node name="CeldaVacia" type="TextureRect" parent="I"]
+modulate = Color( 1, 1, 1, 0 )
+margin_right = 26.0
+margin_bottom = 26.0
+texture = ExtResource( 1 )
+
+[node name="CeldaVacia2" type="TextureRect" parent="I"]
+modulate = Color( 1, 1, 1, 0 )
+margin_left = 30.0
+margin_right = 56.0
+margin_bottom = 26.0
+texture = ExtResource( 1 )
+
+[node name="CeldaVacia3" type="TextureRect" parent="I"]
+modulate = Color( 1, 1, 1, 0 )
+margin_left = 60.0
+margin_right = 86.0
+margin_bottom = 26.0
+texture = ExtResource( 1 )
+
+[node name="CeldaVacia4" type="TextureRect" parent="I"]
+modulate = Color( 1, 1, 1, 0 )
+margin_left = 90.0
+margin_right = 116.0
+margin_bottom = 26.0
+texture = ExtResource( 1 )
+
+[node name="Celda" type="TextureRect" parent="I"]
+margin_top = 30.0
+margin_right = 26.0
+margin_bottom = 56.0
+texture = ExtResource( 1 )
+
+[node name="Celda2" type="TextureRect" parent="I"]
+margin_left = 30.0
+margin_top = 30.0
+margin_right = 56.0
+margin_bottom = 56.0
+texture = ExtResource( 1 )
+
+[node name="Celda3" type="TextureRect" parent="I"]
+margin_left = 60.0
+margin_top = 30.0
+margin_right = 86.0
+margin_bottom = 56.0
+texture = ExtResource( 1 )
+
+[node name="Celda4" type="TextureRect" parent="I"]
+margin_left = 90.0
+margin_top = 30.0
+margin_right = 116.0
+margin_bottom = 56.0
+texture = ExtResource( 1 )
+
+[node name="CeldaVacia5" type="TextureRect" parent="I"]
+modulate = Color( 1, 1, 1, 0 )
+margin_top = 60.0
+margin_right = 26.0
+margin_bottom = 86.0
+texture = ExtResource( 1 )
+
+[node name="CeldaVacia6" type="TextureRect" parent="I"]
+modulate = Color( 1, 1, 1, 0 )
+margin_left = 30.0
+margin_top = 60.0
+margin_right = 56.0
+margin_bottom = 86.0
+texture = ExtResource( 1 )
+
+[node name="CeldaVacia7" type="TextureRect" parent="I"]
+modulate = Color( 1, 1, 1, 0 )
+margin_left = 60.0
+margin_top = 60.0
+margin_right = 86.0
+margin_bottom = 86.0
+texture = ExtResource( 1 )
+
+[node name="CeldaVacia8" type="TextureRect" parent="I"]
+modulate = Color( 1, 1, 1, 0 )
+margin_left = 90.0
+margin_top = 60.0
+margin_right = 116.0
+margin_bottom = 86.0
+texture = ExtResource( 1 )
+
+[node name="CeldaVacia9" type="TextureRect" parent="I"]
+modulate = Color( 1, 1, 1, 0 )
+margin_top = 90.0
+margin_right = 26.0
+margin_bottom = 116.0
+texture = ExtResource( 1 )
+
+[node name="CeldaVacia10" type="TextureRect" parent="I"]
+modulate = Color( 1, 1, 1, 0 )
+margin_left = 30.0
+margin_top = 90.0
+margin_right = 56.0
+margin_bottom = 116.0
+texture = ExtResource( 1 )
+
+[node name="CeldaVacia11" type="TextureRect" parent="I"]
+modulate = Color( 1, 1, 1, 0 )
+margin_left = 60.0
+margin_top = 90.0
+margin_right = 86.0
+margin_bottom = 116.0
+texture = ExtResource( 1 )
+
+[node name="CeldaVacia12" type="TextureRect" parent="I"]
+modulate = Color( 1, 1, 1, 0 )
+margin_left = 90.0
+margin_top = 90.0
+margin_right = 116.0
+margin_bottom = 116.0
+texture = ExtResource( 1 )
+
+[node name="Cubo" type="GridContainer" parent="."]
+modulate = Color( 1, 1, 0, 1 )
+margin_top = 210.0
+margin_right = 86.0
+margin_bottom = 266.0
+columns = 2
+
+[node name="Celda" type="TextureRect" parent="Cubo"]
+margin_right = 26.0
+margin_bottom = 26.0
+texture = ExtResource( 1 )
+
+[node name="Celda2" type="TextureRect" parent="Cubo"]
+margin_left = 30.0
+margin_right = 56.0
+margin_bottom = 26.0
+texture = ExtResource( 1 )
+
+[node name="Celda3" type="TextureRect" parent="Cubo"]
+margin_top = 30.0
+margin_right = 26.0
+margin_bottom = 56.0
+texture = ExtResource( 1 )
+
+[node name="Celda4" type="TextureRect" parent="Cubo"]
+margin_left = 30.0
+margin_top = 30.0
+margin_right = 56.0
+margin_bottom = 56.0
+texture = ExtResource( 1 )
