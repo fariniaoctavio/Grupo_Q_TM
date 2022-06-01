@@ -1,10 +1,11 @@
-extends Node
+extends CenterContainer
 
 var grilla
 var SIGUIENTE
 
 const CELDA_FONDO1=Color(1,1,1)
-const CELDA_FONDO2=Color(0)
+const CELDA_FONDO2=Color(5,5,48)
+signal button_pressed(nombre_boton)
 func _ready():
 #busca el nodo correspondiente
 	grilla = find_node("Grilla")
@@ -24,3 +25,19 @@ func clear_cells(node,color):
 	for cell in node.get_children():
 		cell.modulate=color
 		
+
+
+func _on_Salir_button_down():
+	$Salida.popup_centered()
+	emit_signal("button_pressed","Salir")
+	
+func _on_Nuevo_Juego_button_down():
+	emit_signal("button_pressed","Nuevo Juego")
+func _on_Pausa_button_down():
+	emit_signal("button_pressed","Pausa")
+func _on_ApagarEncenderMusica_button_down():
+	emit_signal("button_pressed","ApagarEncenderMusica")
+
+
+func _on_Salida_confirmed():
+	get_tree().quit()
