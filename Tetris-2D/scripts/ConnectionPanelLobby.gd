@@ -39,7 +39,6 @@ func _connected_fail():
 	hostearButton.set_disabled(false)
 	unirseButton.set_disabled(false)
 
-
 func _server_disconnected():
 	_end_game("El Servidor se desconecto")
 
