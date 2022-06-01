@@ -61,3 +61,6 @@ margin_top = 74.0
 margin_right = 109.0
 margin_bottom = 101.0
 text = "Unirse"
+
+[connection signal="pressed" from="ConnectionPanel/HostearButton" to="ConnectionPanel" method="_on_hostearButton_pressed"]
+[connection signal="pressed" from="ConnectionPanel/UnirseButton" to="ConnectionPanel" method="_on_unirseButton_pressed"]

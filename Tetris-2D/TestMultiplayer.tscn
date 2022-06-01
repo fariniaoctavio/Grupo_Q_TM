@@ -1,0 +1,10 @@
+[gd_scene format=2]
+
+[node name="MultijugadorRootNode" type="Node2D"]
+
+[node name="Label" type="Label" parent="."]
+margin_left = 278.0
+margin_top = 267.0
+margin_right = 497.0
+margin_bottom = 281.0
+text = "HAY DOS PERSONAS CONECTADAS"
