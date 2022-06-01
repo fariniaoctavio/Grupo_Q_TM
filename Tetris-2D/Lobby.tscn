@@ -1,0 +1,66 @@
+[gd_scene load_steps=5 format=2]
+
+[ext_resource path="res://images/lobby_background.jpg" type="Texture" id=1]
+[ext_resource path="res://fonts/ConnectionIii-Rj3W.otf" type="DynamicFontData" id=2]
+[ext_resource path="res://scripts/ConnectionPanelLobby.gd" type="Script" id=3]
+
+[sub_resource type="DynamicFont" id=1]
+size = 51
+outline_color = Color( 0, 0, 0, 1 )
+font_data = ExtResource( 2 )
+
+[node name="Control" type="Control"]
+margin_right = 800.0
+margin_bottom = 600.0
+
+[node name="TextureRect" type="TextureRect" parent="."]
+margin_right = 800.0
+margin_bottom = 600.0
+texture = ExtResource( 1 )
+
+[node name="LabelBienvenida" type="Label" parent="."]
+margin_right = 800.0
+margin_bottom = 300.0
+custom_colors/font_color = Color( 0, 0, 0, 1 )
+custom_fonts/font = SubResource( 1 )
+text = "Bienvenido al Multijugador"
+align = 1
+valign = 1
+
+[node name="ConnectionPanel" type="Panel" parent="."]
+margin_left = 245.0
+margin_top = 249.0
+margin_right = 528.0
+margin_bottom = 360.0
+script = ExtResource( 3 )
+
+[node name="LabelIPHost" type="Label" parent="ConnectionPanel"]
+margin_left = 12.0
+margin_top = 16.0
+margin_right = 87.0
+margin_bottom = 30.0
+text = "IP del Host:"
+
+[node name="IPHostInput" type="LineEdit" parent="ConnectionPanel"]
+margin_left = 102.0
+margin_top = 10.0
+margin_right = 271.0
+margin_bottom = 34.0
+text = "ingrese ip host"
+
+[node name="HostearButton" type="Button" parent="ConnectionPanel"]
+margin_left = 173.0
+margin_top = 75.0
+margin_right = 243.0
+margin_bottom = 99.0
+text = "Hostear"
+
+[node name="UnirseButton" type="Button" parent="ConnectionPanel"]
+margin_left = 31.0
+margin_top = 74.0
+margin_right = 109.0
+margin_bottom = 101.0
+text = "Unirse"
+
+[connection signal="pressed" from="ConnectionPanel/HostearButton" to="ConnectionPanel" method="_on_hostearButton_pressed"]
+[connection signal="pressed" from="ConnectionPanel/UnirseButton" to="ConnectionPanel" method="_on_unirseButton_pressed"]
