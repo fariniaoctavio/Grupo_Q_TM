@@ -2,15 +2,15 @@
 
 importer="texture"
 type="StreamTexture"
-path="res://.import/lobby_background.jpg-ecb487d5bc207289d28216e5024a25b0.stex"
+path="res://.import/connection_correcta_background.png-1ca7de65296464bba80042f3792c7964.stex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://images/lobby_background.jpg"
-dest_files=[ "res://.import/lobby_background.jpg-ecb487d5bc207289d28216e5024a25b0.stex" ]
+source_file="res://imagenes/connection_correcta_background.png"
+dest_files=[ "res://.import/connection_correcta_background.png-1ca7de65296464bba80042f3792c7964.stex" ]
 
 [params]
 
