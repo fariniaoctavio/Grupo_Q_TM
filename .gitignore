@@ -7,5 +7,5 @@ Tetris-2D/export_presets.cfg
 *.translation
 
 # Mono-specific ignores
-Tetris-2D/mono/
+Tetris-2D/.mono/
 Tetris-2D/data_*/
