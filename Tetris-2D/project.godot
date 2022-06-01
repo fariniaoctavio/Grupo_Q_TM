@@ -8,6 +8,16 @@
 
 config_version=4
 
+_global_script_classes=[ {
+"base": "Control",
+"class": "FormasInformacion",
+"language": "GDScript",
+"path": "res://scripts/FormasScript.gd"
+} ]
+_global_script_class_icons={
+"FormasInformacion": ""
+}
+
 [application]
 
 config/name="Tetris- 2D"

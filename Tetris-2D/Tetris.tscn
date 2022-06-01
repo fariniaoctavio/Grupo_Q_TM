@@ -11,7 +11,7 @@ script = ExtResource( 2 )
 [node name="Interfaz" parent="." instance=ExtResource( 1 )]
 anchor_right = 0.0
 anchor_bottom = 0.0
-margin_left = 300.0
-margin_top = 400.0
-margin_right = 300.0
-margin_bottom = 400.0
+margin_left = 104.0
+margin_top = 189.0
+margin_right = 495.0
+margin_bottom = 611.0
