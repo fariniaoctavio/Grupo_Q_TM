@@ -5,10 +5,29 @@
 
 ## Proyecto: Tetris 2D Multijugador
 
-#### Descripcion:
+#### Descripción del Videojuego
+Las mecánicas generales son las mismas que encontramos en el clásico juego Tetris.
+En la pantalla aparecen piezas conformadas por 4 cuadrados que iran cayendo a cierto ritmo. El objetivo es ubicarlas en la base del area de juego para que formen una línea completa, el area de juego está compuesta por una grilla de 10 cuadrados de ancho y 20 de alto. Al completarse una línea esta “desaparece” y todos los bloques por encima de la misma pasan a caer 1 unidad. Puede darse la situación que al colocar una pieza se rompan/completan más de una línea (el máximo será cuatro ya que no hay pieza que tenga una longitud mayor). 
+Romper/completar líneas recompensa al jugador con el siguiente puntaje:
+	1 Línea: 100
+	2 Líneas: 200
+	3 Líneas: 400
+	4 Líneas: 800
+
+El juego cuenta con un reloj que marcará cada cuanto tiempo caen las piezas, este valor está definido por el nivel en el que nos encontremos siendo el tiempo de caido 1/nivel (el nivel se incrementara periodicamente mientras el juego dure hasta llegar a cierto valor maximo).
+
+Si al colocar una pieza algun cuadrado que la componga queda por encima de la altura máxima de la matriz de juego, el jugador perdera la partida quedando registrado su puntaje. El juego no tiene final, sino que el objetivo es conseguir el mayor puntaje posible.
+
+Con respecto al multijugador desarrollaremos como mínimo uno de dos posibles modos de juego.
+Modo Competitivo: 2 jugadores se enfrentan, cada uno con su propia area de juego (su propia matriz y piezas), en una primera instancia ambos jugadores comienzan a jugar a la vez, el que consiga el mayor puntaje al finalizar el juego gana (si un jugador pierde antes que el otro este debera esperar a que el ultimo termine).
+
+Modo Cooperativo: Uno de los jugadores controlara el desplazamiento horizontal y la caida de las piezas mientras que el otro estara encargado de la rotacion de estas. En este modo no hay ganador, sino que el objetivo es conseguir el mayor puntaje.
+En ambos modos la partida se acaba cuando cualquiera de los dos jugadores posiciona una pieza o parte de pieza por encima del nivel máximo.
+
+El juego mostrará un panel donde el usuario puede ingresar una ip a otro jugador que estara hosteando la partida o puede decidir ser host y esperar que alguien más se una a su partida.
 
 
-### Stack Tecnológico:
+#### Stack Tecnológico
 Todo el desarrollo del videojuego será realizado con herramientas de código abierto sobre el sistema operativo Ubuntu.
 
 Paradigma: Programacion Orientada a Objeto
@@ -17,10 +36,14 @@ Utilizaremos el paradigma de la programación orientada a objetos ya que este fa
 Motor Gráfico: Godot
 Godot es un motor de videojuegos 2D y 3D multiplataforma, libre y de código abierto, publicado bajo la Licencia MIT y desarrollado por la comunidad de Godot. El motor es funcional en sistemas Windows, OS X, Linux y BSD. Permite exportar los videojuegos creados a PC, teléfonos móviles, y HTML5.
 
-Editor de Imagenes: GIMP
-Utilizaremos GIMP como editor de imagenes para general las sprites y contenido del videojuego. //TODO: completar descripcion de GIMP 
+Editor de Imágenes: GIMP
+GIMP (siglas en inglés de GNU Image Manipulation Program) es un programa de edición de imágenes digitales en forma de mapa de bits, tanto dibujos como fotografías. Es un programa libre y gratuito. Forma parte del proyecto GNU y está disponible bajo la Licencia pública general de GNU y GNU Lesser General Public License
+
+Editor de Texto: VSCodium
+El editor de texto creado por Microsoft llamado Visual Studio Code presenta tiene su código fuente open source, sin embargo las versiones compiladas del mismo distribuidas por Microsoft incorporan funcionalidades de telemtria propietarias. Para esto utilizaremos VSCodium evitando así tener que compilar nosotros el código fuente de Visual Studio Code, ya que VSCodium es una version compilada de este código fuente mantenida y distribuida por la comunidad open source.
 
 Lenguaje de Programación: 
-Utilizaremos GDScript (llenguaje desarrollado para integrarse con el motor gráfico Godot)
+Utilizaremos GDScript (lenguaje desarrollado para integrarse con el motor gráfico Godot)
 
+GDScript
 GDScript es un lenguaje de programación de alto nivel con tipado dinámico utilizado para crear contenido para Godot Engine. Utiliza una sintaxis similar a Python (los bloques están basados en la indentación y muchas palabras clave son similares). Su objetivo es optimizar e integrarse estrechamente con Godot Engine, permitiendo una gran flexibilidad en la creación e integración de contenido.
