@@ -1,11 +1,11 @@
 # Godot-specific ignores
-./Tetris-2D/import/
-./Tetris-2D/export.cfg
-./Tetris-2D/export_presets.cfg
+Tetris-2D/.import/
+Tetris-2D/export.cfg
+Tetris-2D/export_presets.cfg
 
 # Imported translations (automatically generated from CSV files)
 *.translation
 
 # Mono-specific ignores
-./Tetris-2D/mono/
-./Tetris-2D/data_*/
+Tetris-2D/mono/
+Tetris-2D/data_*/
