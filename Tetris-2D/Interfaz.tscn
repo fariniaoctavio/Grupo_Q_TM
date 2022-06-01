@@ -193,11 +193,19 @@ custom_constants/margin_top = 8
 custom_constants/margin_left = 8
 custom_constants/margin_bottom = 8
 
+[node name="ColorRect" type="ColorRect" parent="Fondo/HBoxContainer/PantallaJuego"]
+margin_left = 8.0
+margin_top = 8.0
+margin_right = 115.0
+margin_bottom = 400.0
+color = Color( 0, 0, 0, 1 )
+
 [node name="Grilla" type="GridContainer" parent="Fondo/HBoxContainer/PantallaJuego"]
 margin_left = 8.0
 margin_top = 8.0
 margin_right = 115.0
 margin_bottom = 400.0
+custom_constants/vseparation = 1
 custom_constants/hseparation = 1
 columns = 10
 

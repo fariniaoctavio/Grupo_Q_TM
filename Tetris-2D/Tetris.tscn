@@ -12,10 +12,8 @@ script = ExtResource( 2 )
 [node name="Interfaz" parent="." instance=ExtResource( 1 )]
 anchor_right = 0.0
 anchor_bottom = 0.0
-margin_left = 104.0
-margin_top = 189.0
-margin_right = 495.0
-margin_bottom = 611.0
+margin_right = 600.0
+margin_bottom = 800.0
 
 [node name="ReproductorMusica" type="AudioStreamPlayer" parent="."]
 stream = ExtResource( 3 )
