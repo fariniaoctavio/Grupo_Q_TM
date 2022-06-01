@@ -1,11 +1,11 @@
 [gd_scene format=2]
 
-[node name="CenterContainer" type="CenterContainer"]
+[node name="Interfaz" type="CenterContainer"]
 anchor_right = 1.0
 anchor_bottom = 1.0
-margin_left = -3.0
+margin_left = -3.5
 margin_top = 8.0
-margin_right = -427.0
-margin_bottom = 208.0
+margin_right = -3.5
+margin_bottom = 8.0
 size_flags_horizontal = 0
 size_flags_vertical = 0
