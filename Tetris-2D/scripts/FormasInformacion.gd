@@ -1,6 +1,6 @@
 extends Control
 
-class_name FormasInformacion
+class_name FormasInfo
 
 var color: Color
 var grilla: Array

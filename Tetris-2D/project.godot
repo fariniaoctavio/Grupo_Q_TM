@@ -10,12 +10,12 @@ config_version=4
 
 _global_script_classes=[ {
 "base": "Control",
-"class": "FormasInformacion",
+"class": "FormasInfo",
 "language": "GDScript",
-"path": "res://scripts/FormasScript.gd"
+"path": "res://scripts/FormasInformacion.gd"
 } ]
 _global_script_class_icons={
-"FormasInformacion": ""
+"FormasInfo": ""
 }
 
 [application]
@@ -23,6 +23,10 @@ _global_script_class_icons={
 config/name="Tetris- 2D"
 run/main_scene="res://Tetris.tscn"
 config/icon="res://icon.png"
+
+[autoload]
+
+Formas="*res://Formas.tscn"
 
 [display]
 
