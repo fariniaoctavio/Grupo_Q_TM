@@ -45,6 +45,7 @@ func _on_Pausa_button_down():
 func _on_ApagarEncenderMusica_button_down():
 	emit_signal("button_pressed","ApagarEncenderMusica")
 
-#Con esto el c
+#Con esto el juego se cierra al confirmar en la ventana pop-up
 func _on_Salida_confirmed():
 	get_tree().quit()
+
