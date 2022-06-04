@@ -2,6 +2,8 @@ extends CenterContainer
 
 enum { DETENIDO, INICIADO, PAUSADO, DETENER, INICIAR, PAUSAR}
 
+enum { ROTAR_DERECHA, ROTAR_IZQUIERDA}
+
 var interfaz
 var estado = DETENIDO
 var posicion_cancion = 0
@@ -53,6 +55,34 @@ func _musica(accion):
 func _musica_is_on():
 	return $ReproductorMusica.volume_db == -18
 	
+func rotar_figura(direccion):
+	#la funcion match de godot basicamente compara el valor de direccion 
+	#con el de las posibilidades, es como un switch case
+	match direccion:
+		ROTAR_DERECHA:
+			forma.rotar_der()
+			direccion=ROTAR_IZQUIERDA
+		ROTAR_IZQUIERDA:
+			forma.rotar_izq()
+			direccion=ROTAR_DERECHA
+	return direccion
+	
+#funcion para mover la figura
+func mover_figura(nueva_posicion,direccion=null):
+	quitar_figura_de_grilla()
+	#rota la figura y almacena la direccion anterior
+	direccion=rotar_figura(direccion)
+	#si se puede colocar la figura, se la coloca y se actualiza su posicion
+	var correcto= posicionar_figura(nueva_posicion)
+	if correcto:
+		posicion=nueva_posicion
+	#de lo contrario se deshace la rotacion
+	else:
+		rotar_figura(direccion)
+	agregar_figura_a_grilla()
+	return correcto
+
+#funcion para indicar donde poner o quitar una figura
 func posicionar_figura(indice, agregar_forma=false, poner=false, color=Color(0)):
 	var correcto=true
 	var tamanio=forma.coordenadas.size()
@@ -85,6 +115,7 @@ func posicionar_figura(indice, agregar_forma=false, poner=false, color=Color(0))
 		y+=1
 	return correcto
 	
+#funcion para agregar o quitar las figuras de la grilla
 func agregar_figura_a_grilla():
 	#true para posicionar la figura y false para que no se coloque automaticamente
 	posicionar_figura(posicion,true,false,forma.color)
