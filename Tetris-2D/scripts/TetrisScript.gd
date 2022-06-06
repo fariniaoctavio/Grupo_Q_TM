@@ -23,6 +23,16 @@ func limpiar_grilla():
 		grilla[i] = false #seteamos cada celda como "vacia"
 	interfaz.limpiar_todas_las_celdas()
 
+func agregar_forma_grilla():
+	lugar_forma(posicion, true, false,forma.color)
+	
+#Funcion para eliminar formas de la cuadricula
+func elim_forma_de_grilla():
+	lugar_forma(posicion,true)
+#Bloquear las formas en su posicion
+func bloc_forma_en_grilla():
+	lugar_forma(posicion, false,true)
+	
 func lugar_forma(indice, agregar_color= false, vista= false,color= Color(0)):
 	var ok = true
 	var tamanio = forma.coordenadas.size(0)
