@@ -23,6 +23,29 @@ func limpiar_grilla():
 		grilla[i] = false #seteamos cada celda como "vacia"
 	interfaz.limpiar_todas_las_celdas()
 
+func lugar_forma(indice, agregar_color= false, vista= false,color= Color(0)):
+	var ok = true
+	var tamanio = forma.coordenadas.size(0)
+	var despl = forma.coordenadas[0]
+	var y =0
+	while y < tamanio and  ok:
+		for x in tamanio:
+			if forma.grilla[y][x]:
+				var grilla_pos = indice + (y + despl) * cantColumnas + x + despl
+				print(grilla_pos)
+				if vista: 
+					grilla[grilla_pos]= true
+				elif grilla_pos >= 0:
+					var gx= indice % cantColumnas + x + despl
+					if gx < 0 or gx>= cantColumnas or grilla_pos >= grilla.size() or grilla[grilla_pos]:
+						ok = !ok
+						break
+					if agregar_color:
+						interfaz.grilla.get_child(grilla_pos).modulate = color
+		y += 1
+	return ok
+					
+
 func _button_pressed(nombre_boton):
 	match nombre_boton:
 		"Nuevo Juego":
