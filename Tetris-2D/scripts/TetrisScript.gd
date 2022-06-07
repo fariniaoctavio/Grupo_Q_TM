@@ -3,6 +3,8 @@ extends CenterContainer
 enum { DETENIDO, INICIADO, PAUSADO, DETENER, INICIAR, PAUSAR}
 enum {ROTAR_IZQ, ROTAR_DER}
 
+enum { ROTAR_DERECHA, ROTAR_IZQUIERDA}
+
 var interfaz
 var estado = DETENIDO
 var posicion_cancion = 0
@@ -95,7 +97,6 @@ func _button_pressed(nombre_boton):
 			else:
 				_musica(PAUSAR)
 
-
 func _musica(accion):
 	if accion == INICIAR:
 		$ReproductorMusica.volume_db = -18
@@ -122,3 +123,58 @@ func agre_puntaje(filas):
 func actualiz_punt_alto():
 	if interfaz.puntaje > interfaz.Puntaje_mas_alto:
 		interfaz.Puntaje_mas_alto = interfaz.puntaje
+	
+#funcion para mover la figura
+func mover_figura(nueva_posicion,direccion=null):
+	quitar_figura_de_grilla()
+	#rota la figura y almacena la direccion anterior
+	direccion=rotar_figura(direccion)
+	#si se puede colocar la figura, se la coloca y se actualiza su posicion
+	var correcto= posicionar_figura(nueva_posicion)
+	if correcto:
+		posicion=nueva_posicion
+	#de lo contrario se deshace la rotacion
+	else:
+		rotar_figura(direccion)
+	agregar_figura_a_grilla()
+	return correcto
+
+#funcion para indicar donde poner o quitar una figura
+func posicionar_figura(indice, agregar_forma=false, poner=false, color=Color(0)):
+	var correcto=true
+	var tamanio=forma.coordenadas.size()
+	var distanciaOrigen=forma.coordenadas[0]
+	var y=0
+	#usaremos valores de x e y para analizar la grilla y ver si podemos situar una figura
+	
+	while y < tamanio && correcto:
+		for x in tamanio:
+			#si se detecta una posicion invalida, se saldra de los bucles
+			#y se devolvera un valor de falso
+			if forma.grilla[y][x]:
+				#esta variable se usa para establecer la posicion de la celda en la grilla donde queramos
+				#poner o quitar una figura
+				var posicion_en_grilla=indice+[y-distanciaOrigen]*cantColumnas+x+distanciaOrigen
+				#si se quiere poner una figura se usara poner como ture
+				if poner:
+					grilla[posicion_en_grilla]=true
+				elif posicion_en_grilla>=0:
+					var posicion_columna=indice%cantColumnas+x+distanciaOrigen
+					#comprobamos que la posicion a donde queremos poner la forma
+					#este contenida dentro de la grilla, y no fuera de la misma
+					if posicion_columna<0 or posicion_columna>=cantColumnas or posicion_en_grilla>=grilla.size() or grilla[posicion_en_grilla]:
+						#si esa posicion esta ocupada o no existe se retorna el valor de correcto como falso y se usa break para salir del bucle
+						correcto=!correcto
+						break
+						#en el caso de que todo salga bien y sea posible poner la figura, entonces se agrega la figura a la grilla
+					if agregar_forma:
+						interfaz.grilla.get_child(posicion_en_grilla).modulate=color
+		y+=1
+	return correcto
+	
+#funcion para agregar o quitar las figuras de la grilla
+func agregar_figura_a_grilla():
+	#true para posicionar la figura y false para que no se coloque automaticamente
+	posicionar_figura(posicion,true,false,forma.color)
+func quitar_figura_de_grilla():
+	posicionar_figura(posicion,false,true)
