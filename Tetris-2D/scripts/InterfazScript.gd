@@ -6,6 +6,7 @@ var Nivel = 1 setget nivel_del_juego
 var Puntaje = 0 setget puntaje_juego
 var Puntaje_mas_alto = 0 setget puntuacion_alta
 var Lineas = 0 setget Cant_Lineas
+
 #const CELDA_FONDO1=Color(1,1,1)
 #const CELDA_FONDO2=Color(5,5,48)
 signal button_pressed(nombre_boton)
@@ -48,10 +49,10 @@ func _ready():
 func sig_forma(forma: FormasInfo):
 	limpiar_celdas(SIGUIENTE)
 	var i = 0 
-	for col  in FormasInfo.coordenadas.size():
+	for col  in forma.coordenadas.size():
 		for filas in [0,1]:
-			if FormasInfo.grilla[filas][col]:
-				SIGUIENTE.get_child(i).modulate = FormasInfo.color
+			if forma.grilla[filas][col]:
+				SIGUIENTE.get_child(i).modulate = forma.color
 				i += 1
 
 

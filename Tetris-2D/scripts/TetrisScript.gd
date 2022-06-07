@@ -1,7 +1,6 @@
 extends CenterContainer
 
 enum { DETENIDO, INICIADO, PAUSADO, DETENER, INICIAR, PAUSAR}
-enum {ROTAR_IZQ, ROTAR_DER}
 
 enum { ROTAR_DERECHA, ROTAR_IZQUIERDA}
 
@@ -41,12 +40,12 @@ func mover_formas(new_pos, dir= null):
 #Rotal las formas
 func rotar(dir):
 	match dir:
-		ROTAR_IZQ:
+		ROTAR_IZQUIERDA:
 			forma.rotatel_left()
-			dir = ROTAR_DER
-		ROTAR_DER:
+			dir = ROTAR_DERECHA
+		ROTAR_DERECHA:
 			forma.rotate_right()
-			dir= ROTAR_IZQ	
+			dir= ROTAR_IZQUIERDA
 	return dir
 
 
@@ -92,7 +91,7 @@ func _button_pressed(nombre_boton):
 			print("SALIR TOCADO")
 		"ApagarEncenderMusica":
 			print("MUSICA TOCADO")
-			if !_musica_is_on():
+			if !_musica_esta_encendido():
 				_musica(INICIAR)
 			else:
 				_musica(PAUSAR)
@@ -109,7 +108,7 @@ func _musica(accion):
 		$ReproductorMusica.stop()
 		print("Musica Pausada")
 
-func _musica_is_on():
+func _musica_esta_encendido():
 	return $ReproductorMusica.volume_db == -18
 	
 #Actualizacion del puntaje a medida que se va jugando
@@ -128,14 +127,14 @@ func actualiz_punt_alto():
 func mover_figura(nueva_posicion,direccion=null):
 	quitar_figura_de_grilla()
 	#rota la figura y almacena la direccion anterior
-	direccion=rotar_figura(direccion)
+	direccion=rotar(direccion)
 	#si se puede colocar la figura, se la coloca y se actualiza su posicion
 	var correcto= posicionar_figura(nueva_posicion)
 	if correcto:
 		posicion=nueva_posicion
 	#de lo contrario se deshace la rotacion
 	else:
-		rotar_figura(direccion)
+		rotar(direccion)
 	agregar_figura_a_grilla()
 	return correcto
 
@@ -178,3 +177,14 @@ func agregar_figura_a_grilla():
 	posicionar_figura(posicion,true,false,forma.color)
 func quitar_figura_de_grilla():
 	posicionar_figura(posicion,false,true)
+	
+func iniciar_partida():
+	print("A jugar...")
+	estado=INICIADO
+	if _musica_esta_encendido():
+		_musica(INICIAR)
+func _terminar_partida():
+	print("Perdiste pa")
+	estado=DETENIDO
+	if _musica_esta_encendido():
+		_musica(DETENER)
