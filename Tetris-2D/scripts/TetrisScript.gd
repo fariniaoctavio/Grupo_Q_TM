@@ -1,6 +1,7 @@
 extends CenterContainer
 
 enum { DETENIDO, INICIADO, PAUSADO, DETENER, INICIAR, PAUSAR}
+enum {ROTAR_IZQ, ROTAR_DER}
 
 enum { ROTAR_DERECHA, ROTAR_IZQUIERDA}
 
@@ -24,6 +25,62 @@ func limpiar_grilla():
 	for i in grilla.size():
 		grilla[i] = false #seteamos cada celda como "vacia"
 	interfaz.limpiar_todas_las_celdas()
+	
+#Funcion para mover las formas
+func mover_formas(new_pos, dir= null):
+	elim_forma_de_grilla()
+	dir = rotar(dir)
+	var ok = lugar_forma(new_pos)
+	if ok:
+		posicion = new_pos
+	else:
+		rotar(dir)
+	agregar_forma_grilla()
+	return ok
+
+#Rotal las formas
+func rotar(dir):
+	match dir:
+		ROTAR_IZQ:
+			forma.rotatel_left()
+			dir = ROTAR_DER
+		ROTAR_DER:
+			forma.rotate_right()
+			dir= ROTAR_IZQ	
+	return dir
+
+
+func agregar_forma_grilla():
+	lugar_forma(posicion, true, false,forma.color)
+	
+#Funcion para eliminar formas de la cuadricula
+func elim_forma_de_grilla():
+	lugar_forma(posicion,true)
+#Bloquear las formas en su posicion
+func bloc_forma_en_grilla():
+	lugar_forma(posicion, false, true)
+	
+func lugar_forma(indice, agregar_color= false, bloqueo= false,color= Color(0)):
+	var ok = true
+	var tamanio = forma.coordenadas.size(0)
+	var despl = forma.coordenadas[0]
+	var y =0
+	while y < tamanio and  ok:
+		for x in tamanio:
+			if forma.grilla[y][x]:
+				var grilla_pos = indice + (y + despl) * cantColumnas + x + despl
+				
+				if bloqueo: 
+					grilla[grilla_pos]= true
+				else:
+					var gx= indice % cantColumnas + x + despl
+					if gx < 0 or gx>= cantColumnas or grilla_pos >= grilla.size() or grilla_pos >= 0 and grilla[grilla_pos]:
+						ok = !ok
+						break
+					if agregar_color:
+						interfaz.grilla.get_child(grilla_pos).modulate = color
+		y += 1
+	return ok
 
 func _button_pressed(nombre_boton):
 	match nombre_boton:
@@ -55,17 +112,17 @@ func _musica(accion):
 func _musica_is_on():
 	return $ReproductorMusica.volume_db == -18
 	
-func rotar_figura(direccion):
-	#la funcion match de godot basicamente compara el valor de direccion 
-	#con el de las posibilidades, es como un switch case
-	match direccion:
-		ROTAR_DERECHA:
-			forma.rotar_der()
-			direccion=ROTAR_IZQUIERDA
-		ROTAR_IZQUIERDA:
-			forma.rotar_izq()
-			direccion=ROTAR_DERECHA
-	return direccion
+#Actualizacion del puntaje a medida que se va jugando
+func agre_puntaje(filas):
+	interfaz.lineas += filas
+	var puntaje = 10 * int(pow(2, filas -1))
+	interfaz.puntaje += puntaje
+	actualiz_punt_alto()
+
+#Actualizacion del puntaje mas alto en caso de que se supere
+func actualiz_punt_alto():
+	if interfaz.puntaje > interfaz.Puntaje_mas_alto:
+		interfaz.Puntaje_mas_alto = interfaz.puntaje
 	
 #funcion para mover la figura
 func mover_figura(nueva_posicion,direccion=null):
@@ -121,4 +178,3 @@ func agregar_figura_a_grilla():
 	posicionar_figura(posicion,true,false,forma.color)
 func quitar_figura_de_grilla():
 	posicionar_figura(posicion,false,true)
-	
