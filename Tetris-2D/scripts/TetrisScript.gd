@@ -1,6 +1,7 @@
 extends CenterContainer
 
 enum { DETENIDO, INICIADO, PAUSADO, DETENER, INICIAR, PAUSAR}
+enum {Der, Izq}
 
 var interfaz
 var estado = DETENIDO
@@ -22,6 +23,29 @@ func limpiar_grilla():
 	for i in grilla.size():
 		grilla[i] = false #seteamos cada celda como "vacia"
 	interfaz.limpiar_todas_las_celdas()
+	
+#Funcion para mover las formas
+func mover_formas(new_pos, dir= null):
+	elim_forma_de_grilla()
+	dir = rotar(dir)
+	var ok = lugar_forma(new_pos)
+	if ok:
+		posicion = new_pos
+	else:
+		rotar(dir)
+	agregar_forma_grilla()
+	return ok
+
+#Rotal las formas
+func rotar(dir):
+	match dir:
+		Izq:
+			forma.rotatel_left()
+			dir = Der
+		Der:
+			forma.rotate_right()
+			dir= Izq
+	return dir
 
 func agregar_forma_grilla():
 	lugar_forma(posicion, true, false,forma.color)
@@ -31,9 +55,9 @@ func elim_forma_de_grilla():
 	lugar_forma(posicion,true)
 #Bloquear las formas en su posicion
 func bloc_forma_en_grilla():
-	lugar_forma(posicion, false,true)
+	lugar_forma(posicion, false, true)
 	
-func lugar_forma(indice, agregar_color= false, vista= false,color= Color(0)):
+func lugar_forma(indice, agregar_color= false, bloqueo= false,color= Color(0)):
 	var ok = true
 	var tamanio = forma.coordenadas.size(0)
 	var despl = forma.coordenadas[0]
@@ -43,7 +67,7 @@ func lugar_forma(indice, agregar_color= false, vista= false,color= Color(0)):
 			if forma.grilla[y][x]:
 				var grilla_pos = indice + (y + despl) * cantColumnas + x + despl
 				print(grilla_pos)
-				if vista: 
+				if bloqueo: 
 					grilla[grilla_pos]= true
 				elif grilla_pos >= 0:
 					var gx= indice % cantColumnas + x + despl
