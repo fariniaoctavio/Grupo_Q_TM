@@ -26,7 +26,13 @@ func Cant_Lineas(valor):
 	find_node("Lineas").text =str(valor)
 	Lineas = valor
 
+#Resetear las estadisticas
 
+func reset_estad(_puntaje_Alto=0, _puntos=0, _lineas=0, _nivel=1):
+	self.Puntaje_mas_alto = _puntaje_Alto
+	self.puntaje_juego = _puntos
+	self.lineas = _lineas
+	self.nivel_del_juego = _nivel
 	
 func _ready():
 #busca el nodo correspondiente
