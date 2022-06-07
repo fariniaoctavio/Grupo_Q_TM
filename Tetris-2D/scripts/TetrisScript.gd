@@ -1,7 +1,7 @@
 extends CenterContainer
 
 enum { DETENIDO, INICIADO, PAUSADO, DETENER, INICIAR, PAUSAR}
-enum {Der, Izq}
+enum {ROTAR_IZQ, ROTAR_DER}
 
 var interfaz
 var estado = DETENIDO
@@ -39,13 +39,14 @@ func mover_formas(new_pos, dir= null):
 #Rotal las formas
 func rotar(dir):
 	match dir:
-		Izq:
+		ROTAR_IZQ:
 			forma.rotatel_left()
-			dir = Der
-		Der:
+			dir = ROTAR_DER
+		ROTAR_DER:
 			forma.rotate_right()
-			dir= Izq
+			dir= ROTAR_IZQ	
 	return dir
+
 
 func agregar_forma_grilla():
 	lugar_forma(posicion, true, false,forma.color)
@@ -66,19 +67,18 @@ func lugar_forma(indice, agregar_color= false, bloqueo= false,color= Color(0)):
 		for x in tamanio:
 			if forma.grilla[y][x]:
 				var grilla_pos = indice + (y + despl) * cantColumnas + x + despl
-				print(grilla_pos)
+				
 				if bloqueo: 
 					grilla[grilla_pos]= true
-				elif grilla_pos >= 0:
+				else:
 					var gx= indice % cantColumnas + x + despl
-					if gx < 0 or gx>= cantColumnas or grilla_pos >= grilla.size() or grilla[grilla_pos]:
+					if gx < 0 or gx>= cantColumnas or grilla_pos >= grilla.size() or grilla_pos >= 0 and grilla[grilla_pos]:
 						ok = !ok
 						break
 					if agregar_color:
 						interfaz.grilla.get_child(grilla_pos).modulate = color
 		y += 1
 	return ok
-					
 
 func _button_pressed(nombre_boton):
 	match nombre_boton:

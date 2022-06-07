@@ -11,10 +11,10 @@ var celdas:GridContainer
 	#es un objeto 2d entonces es posible rotarlo
 func rotar_izq():
 	celdas.get_parent().rotate(-PI/2)
-	_rotar_grilla(1,-1)
+	_rotar_grilla(-1, 1)
 
 func rotar_der():
-	celdas.get_parent().rotate(PI/2)
+	_rotar_grilla(1,-1)
 
 func _rotar_grilla(sign_of_x,sing_of_y):
 	var grilla_rotada=grilla.duplicate(true)
