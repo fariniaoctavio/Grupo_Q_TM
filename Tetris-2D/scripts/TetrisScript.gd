@@ -95,6 +95,7 @@ func _button_pressed(nombre_boton):
 			else:
 				_musica(PAUSAR)
 
+
 func _musica(accion):
 	if accion == INICIAR:
 		$ReproductorMusica.volume_db = -18
@@ -109,3 +110,15 @@ func _musica(accion):
 
 func _musica_is_on():
 	return $ReproductorMusica.volume_db == -18
+	
+#Actualizacion del puntaje a medida que se va jugando
+func agre_puntaje(filas):
+	interfaz.lineas += filas
+	var puntaje = 10 * int(pow(2, filas -1))
+	interfaz.puntaje += puntaje
+	actualiz_punt_alto()
+
+#Actualizacion del puntaje mas alto en caso de que se supere
+func actualiz_punt_alto():
+	if interfaz.puntaje > interfaz.Puntaje_mas_alto:
+		interfaz.Puntaje_mas_alto = interfaz.puntaje

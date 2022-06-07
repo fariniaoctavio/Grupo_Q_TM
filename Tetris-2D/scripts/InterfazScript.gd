@@ -33,6 +33,9 @@ func reset_estad(_puntaje_Alto=0, _puntos=0, _lineas=0, _nivel=1):
 	self.puntaje_juego = _puntos
 	self.lineas = _lineas
 	self.nivel_del_juego = _nivel
+
+func opciones(datos):
+	self.Puntaje_mas_alto = datos.Puntaje_mas_alto
 	
 func _ready():
 #busca el nodo correspondiente
@@ -41,6 +44,16 @@ func _ready():
 	agregar_celdas(grilla,200)
 	limpiar_celdas(grilla)
 	limpiar_celdas(SIGUIENTE)
+
+func sig_forma(forma: FormasInfo):
+	limpiar_celdas(SIGUIENTE)
+	var i = 0 
+	for col  in FormasInfo.coordenadas.size():
+		for filas in [0,1]:
+			if FormasInfo.grilla[filas][col]:
+				SIGUIENTE.get_child(i).modulate = FormasInfo.color
+				i += 1
+
 
 func agregar_celdas(node,n):
 	var numero_de_celdas=node.get_child_count()
