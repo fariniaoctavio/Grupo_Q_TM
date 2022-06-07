@@ -2,11 +2,32 @@ extends CenterContainer
 
 var grilla
 var SIGUIENTE
-
+var Nivel = 1 setget nivel_del_juego
+var Puntaje = 0 setget puntaje_juego
+var Puntaje_mas_alto = 0 setget puntuacion_alta
+var Lineas = 0 setget Cant_Lineas
 #const CELDA_FONDO1=Color(1,1,1)
 #const CELDA_FONDO2=Color(5,5,48)
 signal button_pressed(nombre_boton)
+#Funciones para conteo de puntos, lineas, puntuacion mas alta y nivel del juego
+func nivel_del_juego(valor):
+	find_node("Nivel").text =str(valor)
+	Nivel = valor
+	
+func puntaje_juego(valor):
+	find_node("Puntaje").text = str(valor)
+	Puntaje = valor
 
+func puntuacion_alta(valor):
+	find_node("Puntaje Mas Alto").text = "%@8d" % valor
+	Puntaje_mas_alto = valor
+
+func Cant_Lineas(valor):
+	find_node("Lineas").text =str(valor)
+	Lineas = valor
+
+
+	
 func _ready():
 #busca el nodo correspondiente
 	grilla = find_node("Grilla")
