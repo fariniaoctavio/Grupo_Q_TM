@@ -4,6 +4,11 @@ enum { DETENIDO, INICIADO, PAUSADO, DETENER, INICIAR, PAUSAR}
 
 enum { ROTAR_DERECHA, ROTAR_IZQUIERDA}
 
+const posicion_inic = 5
+const posicion_fin = 25
+const Velocidad_tick = 1.0
+const velocidad_multiple = 10
+
 var interfaz
 var estado = DETENIDO
 var posicion_cancion = 0
@@ -12,15 +17,13 @@ var cantColumnas
 var forma = FormasInfo #contiene la forma actual que controlara el jugador
 var grilla = [] #array que representa cada celda de la grilla
 var posicion = 0 #posicion de la forma dentro de la grilla
-
+var siguiente_forma = FormasInfo
 func _ready():
 	interfaz = $Interfaz
 	interfaz.connect("button_pressed", self, "_button_pressed")
 	limpiar_grilla()
 	cantColumnas = interfaz.grilla.get_columns()
-	interfaz.reset_estad() 
-	for i in range(8):
-		agregar_puntaje(i)
+	interfaz.reset_estad()
 
 func limpiar_grilla():
 	grilla.clear()
@@ -186,6 +189,27 @@ func iniciar_partida():
 	estado=INICIADO
 	if _musica_esta_encendido():
 		_musica(INICIAR)
+	limpiar_grilla()
+	interfaz.reset_estad(interfaz.puntaje_mas_alto)
+	nueva_forma()
+
+
+#Agregar una nueva forma a la grilla al empezar el juego
+func nueva_forma():
+	if siguiente_forma:
+		forma = siguiente_forma
+	else:
+		forma = Formas.obtener_forma()
+	siguiente_forma = Formas.obtener_forma()
+	interfaz.sig_forma(siguiente_forma)
+	posicion = posicion_inic
+	agregar_figura_a_grilla()
+	#subir_nivel()
+	
+#Velocidad de desplazamiento de la figura
+func bajada_normal():
+	$Ticker.start(Velocidad_tick / interfaz.nivel)
+	
 func _terminar_partida():
 	print("Perdiste pa")
 	estado=DETENIDO
