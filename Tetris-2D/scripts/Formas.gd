@@ -11,7 +11,7 @@ func obtener_forma() -> FormasInfo:
 	if _indice==0:
 		_formas.shuffle()
 		_indice=_formas.size()
-	_indice-=1
+	_indice -= 1
 	var f=FormasInfo.new()
 	#una vez que se obtuvo una pieza, se copia las propiedades de esa 
 	#y se las agrega al array con el que haremos las mezclas
@@ -43,8 +43,8 @@ func _obtener_grilla(n,celdas):
 	var grilla = []
 	var fila = []
 	var i = 0
-	for cell in celdas:
-		fila.append(cell.modulate.a > 0.1)
+	for celda in celdas:
+		fila.append(celda.modulate.a > 0.1)
 		#esto devuelve un valor T o F dependiendo si la celda esta llena o no
 		i+=1
 		if i==n:
