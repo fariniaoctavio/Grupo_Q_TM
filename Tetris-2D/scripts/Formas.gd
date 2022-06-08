@@ -31,7 +31,6 @@ func _ready():
 		var f2= tamanio/2
 		figura.coordenadas=range(-f2,f2+1)
 		
-		
 		#Quitar la coordenada 0 para las grillas de cualquier tamaño
 		if tamanio % 2 == 0:
 			figura.coordenadas.remove(f2)

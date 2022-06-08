@@ -17,6 +17,7 @@ func _ready():
 	interfaz = $Interfaz
 	interfaz.connect("button_pressed", self, "_button_pressed")
 	limpiar_grilla()
+	cantColumnas = interfaz.grilla.get_columns()
 
 func limpiar_grilla():
 	grilla.clear()
@@ -111,7 +112,7 @@ func _musica_esta_encendido():
 	return $ReproductorMusica.volume_db == -18
 	
 #Actualizacion del puntaje a medida que se va jugando
-func agre_puntaje(filas):
+func agregar_puntaje(filas):
 	interfaz.lineas += filas
 	var puntaje = 10 * int(pow(2, filas -1))
 	interfaz.puntaje += puntaje
