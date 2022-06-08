@@ -20,6 +20,8 @@ var grilla = [] #array que representa cada celda de la grilla
 var posicion = 0 #posicion de la forma dentro de la grilla
 var siguiente_forma = FormasInfo
 var cuenta =0
+var prima = 0
+
 func _ready():
 	interfaz = $Interfaz
 	interfaz.connect("button_pressed", self, "_button_pressed")
@@ -130,21 +132,16 @@ func agregar_puntaje(filas):
 func actualiz_punt_alto():
 	if interfaz.puntaje > interfaz.puntaje_mas_alto:
 		interfaz.puntaje_mas_alto = interfaz.puntaje
-	
-#funcion para mover la figura
-func mover_figura(nueva_posicion,direccion=null):
-	quitar_figura_de_grilla()
-	#rota la figura y almacena la direccion anterior
-	direccion=rotar(direccion)
-	#si se puede colocar la figura, se la coloca y se actualiza su posicion
-	var correcto= posicionar_figura(nueva_posicion)
-	if correcto:
-		posicion=nueva_posicion
-	#de lo contrario se deshace la rotacion
-	else:
-		rotar(direccion)
-	agregar_figura_a_grilla()
-	return correcto
+
+
+func mover_izq():
+	if posicion % cantColumnas > 0:
+		mover_formas(posicion - 1)
+func mover_der():
+	if posicion % cantColumnas < cantColumnas -1:
+		mover_formas(posicion + 1)
+
+
 
 #funcion para indicar donde poner o quitar una figura
 func posicionar_figura(indice, agregar_forma=false, poner=false, color=Color(0)):
@@ -240,3 +237,53 @@ func _terminar_partida():
 	if _musica_esta_encendido():
 		_musica(DETENER)
 	
+
+
+func Tiempo():
+	var nueva_pos = posicion + cantColumnas
+	if mover_formas(nueva_pos):
+		interfaz.puntaje += prima
+		actualiz_punt_alto()
+	else:
+		if nueva_pos <= posicion_fin:
+			_terminar_partida()
+		else:
+			bloc_forma_en_grilla()
+			chequear_filas()
+			nueva_forma()
+#chequear si las filas o columnas estan completas
+func chequear_filas():
+	var i = grilla.size() -1
+	var x =0
+	var filas = 0
+	while i >= 0:
+		if grilla[i]:
+			x += 1
+			i -= 1
+			if x == cantColumnas:
+				filas += 1
+				x=0
+			else:
+				i += x
+				x = 0 
+				if filas > 0:
+					remover_filas(i, filas)
+				filas = 0
+				i -= cantColumnas
+func remover_filas(i, filas):
+	agregar_puntaje(filas)
+	var num_celdas = filas * cantColumnas
+	for n in num_celdas:
+		interfaz.grilla.get_child(i + n + 1).modulate = Color(0)
+	pause()
+	yield(get_tree().create_timer(0,3), "sinTiempo")
+	pause(false)
+	var to = i + num_celdas
+	while i >= 0:
+		grilla[to] = grilla [i]
+		interfaz.grilla.get_child(to).modulate = interfaz.grilla.get_child(i).modulate
+		if i == 0:
+			grilla[i]=false
+			interfaz.grilla.get_child(i).modulate = Color(0)
+		i -= 1
+		to -= 1

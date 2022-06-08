@@ -243,8 +243,6 @@ rect_min_size = Vector2( 150, 52.5 )
 window_title = "Gordot-Salir"
 dialog_text = "¿Esta seguro que desea salir?"
 
-[node name="Timer" type="Timer" parent="."]
-
 [connection signal="button_down" from="Fondo/HBoxContainer/Informacion/Informacion/Nuevo Juego" to="." method="_on_Nuevo_Juego_button_down"]
 [connection signal="button_down" from="Fondo/HBoxContainer/Informacion/Informacion/Pausa" to="." method="_on_Pausa_button_down"]
 [connection signal="button_down" from="Fondo/HBoxContainer/Informacion/Informacion/ApagarEncenderMusica" to="." method="_on_ApagarEncenderMusica_button_down"]
