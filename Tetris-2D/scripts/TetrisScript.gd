@@ -275,9 +275,9 @@ func remover_filas(i, filas):
 	var num_celdas = filas * cantColumnas
 	for n in num_celdas:
 		interfaz.grilla.get_child(i + n + 1).modulate = Color(0)
-	pause()
+	pausa()
 	yield(get_tree().create_timer(0,3), "sinTiempo")
-	pause(false)
+	pausa(false)
 	var to = i + num_celdas
 	while i >= 0:
 		grilla[to] = grilla [i]
@@ -287,3 +287,5 @@ func remover_filas(i, filas):
 			interfaz.grilla.get_child(i).modulate = Color(0)
 		i -= 1
 		to -= 1
+func pausa(valor = true):
+	get_tree().paused = valor
