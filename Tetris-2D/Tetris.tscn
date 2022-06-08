@@ -20,4 +20,10 @@ stream = ExtResource( 3 )
 
 [node name="Timer" type="Timer" parent="."]
 
+[node name="TickerIzquierdo" type="Timer" parent="."]
+
+[node name="TickerDerecho" type="Timer" parent="."]
+
 [connection signal="timeout" from="Timer" to="." method="Tiempo"]
+[connection signal="timeout" from="TickerIzquierdo" to="." method="_on_TickerIzquierdo_timeout"]
+[connection signal="timeout" from="TickerDerecho" to="." method="_on_TickerDerecho_timeout"]

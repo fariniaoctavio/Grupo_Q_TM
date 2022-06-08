@@ -7,8 +7,8 @@ var grilla: Array
 var coordenadas: Array
 
 
-	#No se puede rotar un grid, pero como su padre 
-	#es un objeto 2d entonces es posible rotarlo
+#No se puede rotar un grid, pero como su padre 
+#es un objeto 2d entonces es posible rotarlo
 func rotar_izq():
 	_rotar_grilla(-1, 1)
 

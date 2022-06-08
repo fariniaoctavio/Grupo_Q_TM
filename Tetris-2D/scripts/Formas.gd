@@ -10,9 +10,9 @@ var _indice=0
 func obtener_forma() -> FormasInfo:
 	if _indice==0:
 		_formas.shuffle()
-		_indice=_formas.size()
+		_indice = _formas.size()
 	_indice -= 1
-	var f=FormasInfo.new()
+	var f = FormasInfo.new()
 	#una vez que se obtuvo una pieza, se copia las propiedades de esa 
 	#y se las agrega al array con el que haremos las mezclas
 	f.name=_formas[_indice].name
@@ -23,7 +23,7 @@ func obtener_forma() -> FormasInfo:
 
 func _ready():
 	for forma in get_children():
-		var figura=FormasInfo.new()
+		var figura = FormasInfo.new()
 		figura.name = forma.name
 		figura.color = forma.modulate
 		
@@ -34,10 +34,10 @@ func _ready():
 		#Quitar la coordenada 0 para las grillas de cualquier tamaño
 		if tamanio % 2 == 0:
 			figura.coordenadas.remove(f2)
-			#aplicamos la funcion para aplicar todas las propiedades de la figura
-			#cada vez que esta es llamada se pretende obtener una figura distinta
-			figura.grilla=_obtener_grilla(tamanio,figura.get_children())
-			_formas.append(figura)
+		#aplicamos la funcion para aplicar todas las propiedades de la figura
+		#cada vez que esta es llamada se pretende obtener una figura distinta
+		figura.grilla=_obtener_grilla(tamanio,forma.get_children())
+		_formas.append(figura)
 
 func _obtener_grilla(n,celdas):
 	var grilla = []
