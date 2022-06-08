@@ -18,6 +18,9 @@ func _ready():
 	interfaz.connect("button_pressed", self, "_button_pressed")
 	limpiar_grilla()
 	cantColumnas = interfaz.grilla.get_columns()
+	interfaz.reset_estad() 
+	for i in range(8):
+		agregar_puntaje(i)
 
 func limpiar_grilla():
 	grilla.clear()
@@ -120,8 +123,8 @@ func agregar_puntaje(filas):
 
 #Actualizacion del puntaje mas alto en caso de que se supere
 func actualiz_punt_alto():
-	if interfaz.puntaje > interfaz.Puntaje_mas_alto:
-		interfaz.Puntaje_mas_alto = interfaz.puntaje
+	if interfaz.puntaje > interfaz.puntaje_mas_alto:
+		interfaz.puntaje_mas_alto = interfaz.puntaje
 	
 #funcion para mover la figura
 func mover_figura(nueva_posicion,direccion=null):
