@@ -2,30 +2,31 @@ extends CenterContainer
 
 var grilla
 var SIGUIENTE
-var Nivel = 1 setget nivel_del_juego
-var Puntaje = 0 setget puntaje_juego
-var Puntaje_mas_alto = 0 setget puntuacion_alta
-var Lineas = 0 setget Cant_Lineas
+var nivel = 1 setget nivel_del_juego
+var puntaje = 0 setget puntaje_juego
+var puntaje_mas_alto = 0 setget puntuacion_alta
+var lineas = 0 setget Cant_Lineas
 
 #const CELDA_FONDO1=Color(1,1,1)
 #const CELDA_FONDO2=Color(5,5,48)
 signal button_pressed(nombre_boton)
 #Funciones para conteo de puntos, lineas, puntuacion mas alta y nivel del juego
+
 func nivel_del_juego(valor):
 	find_node("Nivel").text =str(valor)
-	Nivel = valor
+	nivel = valor
 	
 func puntaje_juego(valor):
 	find_node("Puntaje").text = str(valor)
-	Puntaje = valor
+	puntaje = valor
 
 func puntuacion_alta(valor):
 	find_node("Puntaje Mas Alto").text = "%@8d" % valor
-	Puntaje_mas_alto = valor
+	puntaje_mas_alto = valor
 
 func Cant_Lineas(valor):
 	find_node("Lineas").text =str(valor)
-	Lineas = valor
+	lineas = valor
 
 #Resetear las estadisticas
 

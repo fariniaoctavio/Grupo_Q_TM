@@ -68,7 +68,6 @@ func lugar_forma(indice, agregar_color= false, bloqueo= false,color= Color(0)):
 		for x in tamanio:
 			if forma.grilla[y][x]:
 				var grilla_pos = indice + (y + despl) * cantColumnas + x + despl
-				
 				if bloqueo: 
 					grilla[grilla_pos]= true
 				else:
