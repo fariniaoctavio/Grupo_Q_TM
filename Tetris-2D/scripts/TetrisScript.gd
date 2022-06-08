@@ -8,6 +8,7 @@ const posicion_inic = 5
 const posicion_fin = 25
 const Velocidad_tick = 1.0
 const velocidad_multiple = 10
+const maximo_nivel = 100
 
 var interfaz
 var estado = DETENIDO
@@ -18,6 +19,7 @@ var forma = FormasInfo #contiene la forma actual que controlara el jugador
 var grilla = [] #array que representa cada celda de la grilla
 var posicion = 0 #posicion de la forma dentro de la grilla
 var siguiente_forma = FormasInfo
+var cuenta =0
 func _ready():
 	interfaz = $Interfaz
 	interfaz.connect("button_pressed", self, "_button_pressed")
@@ -204,14 +206,37 @@ func nueva_forma():
 	interfaz.sig_forma(siguiente_forma)
 	posicion = posicion_inic
 	agregar_figura_a_grilla()
-	#subir_nivel()
+	subir_nivel()
+	
+#Subir de nivel
+func subir_nivel():
+	cuenta += 1
+	if cuenta % 10 ==0:
+		incrementar_nivel()
+
+func incrementar_nivel():
+	if interfaz.nivel < maximo_nivel:
+		interfaz.nivel += 1
+		$Tiker.set_wait_time(Velocidad_tick / interfaz.nivel)
+ 
+
 	
 #Velocidad de desplazamiento de la figura
 func bajada_normal():
 	$Ticker.start(Velocidad_tick / interfaz.nivel)
 	
+#Velocidades de caida
+func caida_suave():
+	$Ticker.stop()
+	$Ticker.start(Velocidad_tick / interfaz.nivel / velocidad_multiple)
+func caida_fuerte():
+	$Ticker.stop()
+	$Ticker.start(Velocidad_tick / maximo_nivel)
+	
 func _terminar_partida():
 	print("Perdiste pa")
 	estado=DETENIDO
+	$Ticker.stop()
 	if _musica_esta_encendido():
 		_musica(DETENER)
+	
