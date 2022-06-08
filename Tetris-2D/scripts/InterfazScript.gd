@@ -21,7 +21,7 @@ func Puntaje_juego(valor):
 	puntaje = valor
 
 func Puntuacion_alta(valor):
-	find_node("Puntaje Mas Alto").text = "%@8d" % valor
+	find_node("PuntajeM").text = "%08d" % valor
 	puntaje_mas_alto = valor
 
 func Cant_Lineas(valor):
@@ -32,9 +32,9 @@ func Cant_Lineas(valor):
 
 func reset_estad(_puntaje_Alto=0, _puntos=0, _lineas=0, _nivel=1):
 	self.puntaje_mas_alto = _puntaje_Alto
-	self.puntaje_juego = _puntos
+	self.puntaje = _puntos
 	self.lineas = _lineas
-	self.nivel_del_juego = _nivel
+	self.nivel = _nivel
 
 func opciones(datos):
 	self.puntaje_mas_alto = datos.puntaje_mas_alto
