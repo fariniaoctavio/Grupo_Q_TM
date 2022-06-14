@@ -207,7 +207,7 @@ func subir_nivel():
 func incrementar_nivel():
 	if interfaz.nivel < MAXIMO_NIVEL:
 		interfaz.nivel += 1
-		$Tiker.set_wait_time(VELOCIDAD_DE_CAIDA / interfaz.nivel)
+		$Timer.set_wait_time(VELOCIDAD_DE_CAIDA / interfaz.nivel)
 
 #Funciones controles de musica
 func _musica(accion):
@@ -227,7 +227,7 @@ func _musica_esta_encendido():
 #Actualizacion del puntaje a medida que se va jugando
 func agregar_puntaje(filas):
 	interfaz.lineas += filas
-	var puntaje = 10 * int(pow(2, filas -1))
+	var puntaje = 100 * int(pow(2, filas -1))
 	interfaz.puntaje += puntaje
 	actualiz_punt_alto()
 
@@ -252,8 +252,8 @@ func _terminar_partida():
 	print("SE ACABO EL JUEGO")
 
 	$Timer.stop()
-	$TimerIzquierdo.stop()
-	$TimerDerecho.stop()
+	$TickerIzquierdo.stop()
+	$TickerDerecho.stop()
 	interfaz.set_button_states(HABILITADO)
 	if _musica_esta_encendido():
 		_musica(DETENER)
@@ -287,11 +287,11 @@ func chequear_filas():
 				filas.append(nfilas)
 				x=0
 				nfilas-=1
-			else:
-				i += x
-				x = 0 
-				i-=cantColumnas
-				nfilas-=1
+		else:
+			i += x
+			x = 0 
+			i-=cantColumnas
+			nfilas-=1
 	if filas.empty()==false:
 		remover_filas(filas)
 
@@ -303,7 +303,7 @@ func remover_filas( filas):
 
 	#TODO: Refactor sonido
 
-	yield(get_tree().create_timer(0,3), "Tiempo fuera")
+	yield(get_tree().create_timer(0,3), "timeout")
 	pausa(false)
 	elim_forma_de_grilla()
 	for nfilas in filas.size():	
@@ -313,7 +313,7 @@ func remover_filas( filas):
 		var desde=hacia-cantColumnas
 		while desde>=0:
 			grilla[hacia]=grilla[desde]
-			interfaz.grilla.get_child(hacia).modulate=interfaz.gilla.get_child(desde).modulate
+			interfaz.grilla.get_child(hacia).modulate=interfaz.grilla.get_child(desde).modulate
 			if desde == 0 :
 				grilla[desde]=false
 				interfaz.grilla.get_child(desde).modulate=Color(0)
