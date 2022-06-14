@@ -1,48 +1,77 @@
 extends CenterContainer
 
 enum { DETENIDO, INICIADO, PAUSADO, DETENER, INICIAR, PAUSAR}
-
 enum { ROTAR_DERECHA, ROTAR_IZQUIERDA}
 
-const posicion_inic = 5
-const posicion_fin = 25
-const Velocidad_tick = 1.0
-const velocidad_multiple = 10
-const maximo_nivel = 100
+const DESHABILITADO = true
+const HABILITADO = false
+const MAXIMO_NIVEL = 100
+const POS_INICIAL = 5
+const POS_FINAL =  25
+const VELOCIDAD_DE_CAIDA = 1.0
+const MULTIPLICADOR_DE_VEL = 10
+const TIEMPO_DE_ESPERA = 0.15
+const DELAY = 0.05
 
 var interfaz
 var estado = DETENIDO
 var posicion_cancion = 0
+var grilla = [] #array que representa cada celda de la grilla
 var cantColumnas
 
-var forma = FormasInfo #contiene la forma actual que controlara el jugador
-var grilla = [] #array que representa cada celda de la grilla
+var forma : FormasInfo #contiene la forma actual que controlara el jugador
+var siguiente_forma : FormasInfo
 var posicion = 0 #posicion de la forma dentro de la grilla
-var siguiente_forma = FormasInfo
 var cuenta =0
 var prima = 0
 
 func _ready():
 	interfaz = $Interfaz
 	interfaz.connect("button_pressed", self, "_button_pressed")
-	limpiar_grilla()
 	cantColumnas = interfaz.grilla.get_columns()
+	interfaz.setear_estados_de_botones(HABILITADO) #TODO: refactor
 	interfaz.reset_estad()
+	
+	randomize()
+
+func iniciar_partida():
+	print("A jugar...")
+	estado = INICIADO
+	posicion_cancion = 0.0
+	if _musica_esta_encendido():
+		_musica(INICIAR)
+	limpiar_grilla()
+	interfaz.reset_estad(interfaz.puntaje_mas_alto)
+	nueva_forma()
+
+func nueva_forma():
+	if siguiente_forma:
+		forma = siguiente_forma
+	else:
+		forma = Formas.obtener_forma()
+	siguiente_forma = Formas.obtener_forma()
+	interfaz.configurar_siguiente_figura(siguiente_forma)
+	posicion = POS_INICIAL
+	agregar_forma_grilla()
+	bajada_normal()
+	subir_nivel()
 
 func limpiar_grilla():
 	grilla.clear()
-	grilla.resize(interfaz.find_node("Grilla").get_child_count()) #obtenemos la cantidad de celdas de la grilla
+	grilla.resize(interfaz.grilla.get_child_count()) #obtenemos la cantidad de celdas de la grilla
 	for i in grilla.size():
 		grilla[i] = false #seteamos cada celda como "vacia"
 	interfaz.limpiar_todas_las_celdas()
 	
 #Funcion para mover las formas
-func mover_formas(new_pos, dir= null):
+func mover_forma(nueva_posicion, dir= null):
 	elim_forma_de_grilla()
+	# Rota la forma
 	dir = rotar(dir)
-	var ok = lugar_forma(new_pos)
+	# coloca la pieza si es posible, sino deshace la rotacion
+	var ok = posicionar_figura(nueva_posicion)
 	if ok:
-		posicion = new_pos
+		posicion = nueva_posicion
 	else:
 		rotar(dir)
 	agregar_forma_grilla()
@@ -52,53 +81,82 @@ func mover_formas(new_pos, dir= null):
 func rotar(dir):
 	match dir:
 		ROTAR_IZQUIERDA:
-			forma.rotatel_left()
+			forma.rotar_izq() #TODO: REFACTOR
 			dir = ROTAR_DERECHA
 		ROTAR_DERECHA:
-			forma.rotate_right()
+			forma.rotar_der() #TODO: REFACTOR
 			dir= ROTAR_IZQUIERDA
 	return dir
 
 
 func agregar_forma_grilla():
-	lugar_forma(posicion, true, false,forma.color)
+	posicionar_figura(posicion, true, false, forma.color)
 	
 #Funcion para eliminar formas de la cuadricula
 func elim_forma_de_grilla():
-	lugar_forma(posicion,true)
+	posicionar_figura(posicion,true)
+
 #Bloquear las formas en su posicion
 func bloc_forma_en_grilla():
-	lugar_forma(posicion, false, true)
+	posicionar_figura(posicion, false, true)
+
+#funcion para indicar donde poner o quitar una figura
+func posicionar_figura(indice, agregar_forma=false, poner=false, color=Color(0)):
+	var correcto=true
+	var tamanio=forma.coordenadas.size()
+	var distanciaOrigen=forma.coordenadas[0]
+	var y=0
+	#usaremos valores de x e y para analizar la grilla y ver si podemos situar una figura
 	
-func lugar_forma(indice, agregar_color= false, bloqueo= false,color= Color(0)):
-	var ok = true
-	var tamanio = forma.coordenadas.size(0)
-	var despl = forma.coordenadas[0]
-	var y =0
-	while y < tamanio and  ok:
+	while y < tamanio and correcto:
 		for x in tamanio:
+			#si se detecta una posicion invalida, se saldra de los bucles
+			#y se devolvera un valor de falso
 			if forma.grilla[y][x]:
-				var grilla_pos = indice + (y + despl) * cantColumnas + x + despl
-				if bloqueo: 
-					grilla[grilla_pos]= true
+				#esta variable se usa para establecer la posicion de la celda en la grilla donde queramos
+				#poner o quitar una figura
+				var posicion_en_grilla = indice + (y+distanciaOrigen) * cantColumnas + x + distanciaOrigen
+				#si se quiere poner una figura se usara poner como ture
+				if poner:
+					grilla[posicion_en_grilla]=true
 				else:
-					var gx= indice % cantColumnas + x + despl
-					if gx < 0 or gx>= cantColumnas or grilla_pos >= grilla.size() or grilla_pos >= 0 and grilla[grilla_pos]:
-						ok = !ok
+					var posicion_columna = indice % cantColumnas + x + distanciaOrigen
+					#comprobamos que la posicion a donde queremos poner la forma
+					#este contenida dentro de la grilla, y no fuera de la misma
+					if posicion_columna < 0 or posicion_columna >= cantColumnas or posicion_en_grilla >= grilla.size() or posicion_en_grilla >= 0 and grilla[posicion_en_grilla]:		   
+						#si esa posicion esta ocupada o no existe se retorna el valor de correcto como falso y se usa break para salir del bucle
+						correcto = !correcto
 						break
-					if agregar_color:
-						interfaz.grilla.get_child(grilla_pos).modulate = color
-		y += 1
-	return ok
+						#en el caso de que todo salga bien y sea posible poner la figura, entonces se agrega la figura a la grilla
+					if agregar_forma and posicion_en_grilla >= 0:
+						interfaz.grilla.get_child(posicion_en_grilla).modulate=color
+		y+=1
+	return correcto
 
 func _button_pressed(nombre_boton):
 	match nombre_boton:
 		"Nuevo Juego":
 			print("JUEGO NUEVO TOCADO")
+			interfaz.setear_estados_de_botones(DESHABILITADO)
+			iniciar_partida()
+			
 		"Pausa":
 			print("PAUSA TOCADO")
+			if estado==INICIADO:
+				interfaz.set_button_text("Pausa", "Continuar") #TODO: refactor
+				estado = PAUSADO
+				pausa()
+				if _musica_esta_encendido():
+					_musica(PAUSAR)
+			else:
+				interfaz.set_button_text("Pausa", "Pausa") #TODO: refactor
+				estado=INICIADO
+				if _musica_esta_encendido():
+					_musica(INICIAR)
+				
 		"Salir":
 			print("SALIR TOCADO")
+		
 		"ApagarEncenderMusica":
 			print("MUSICA TOCADO")
 			if !_musica_esta_encendido():
@@ -106,6 +164,52 @@ func _button_pressed(nombre_boton):
 			else:
 				_musica(PAUSAR)
 
+# configuracion para las teclas de input, asi poder mover la figura en el juego
+func _input(accion):
+	pass
+	if estado == INICIADO:
+		if accion.is_action_pressed("ui_page_up"):
+			incrementar_nivel()
+		if accion.is_action_released("ui_down"):
+			prima = 0
+			bajada_normal()
+		if accion.is_action_pressed("ui_down"):
+			prima = 2
+			caida_suave()
+		if accion.is_action_pressed("ui_accept"):
+			caida_fuerte()
+		if accion.is_action_pressed("ui_left"):
+			mover_izq()
+			$TickerIzquierdo.start(TIEMPO_DE_ESPERA)
+		if accion.is_action_released("ui_left"):
+			$TickerIzquierdo.stop()
+		if accion.is_action_pressed("ui_right"):
+			mover_der()
+			$TickerDerecho.start(TIEMPO_DE_ESPERA)
+		if accion.is_action_released("ui_right"):
+			$TickerDerecho.stop()
+		if accion.is_action_pressed("ui_up"):
+			if accion.shift:
+				mover_forma(posicion, ROTAR_DERECHA)
+			else:
+				mover_forma(posicion, ROTAR_IZQUIERDA)
+		if accion.is_action_pressed("ui_cancel"):
+			_terminar_partida()
+		if accion is InputEventKey:
+			get_tree().set_input_as_handled()
+
+#Subir de nivel
+func subir_nivel():
+	cuenta += 1
+	if cuenta % 10 ==0:
+		incrementar_nivel()
+
+func incrementar_nivel():
+	if interfaz.nivel < MAXIMO_NIVEL:
+		interfaz.nivel += 1
+		$Timer.set_wait_time(VELOCIDAD_DE_CAIDA / interfaz.nivel)
+
+#Funciones controles de musica
 func _musica(accion):
 	if accion == INICIAR:
 		$ReproductorMusica.volume_db = -18
@@ -117,14 +221,13 @@ func _musica(accion):
 		$ReproductorMusica.volume_db = 0
 		$ReproductorMusica.stop()
 		print("Musica Pausada")
-
 func _musica_esta_encendido():
 	return $ReproductorMusica.volume_db == -18
 	
 #Actualizacion del puntaje a medida que se va jugando
 func agregar_puntaje(filas):
 	interfaz.lineas += filas
-	var puntaje = 10 * int(pow(2, filas -1))
+	var puntaje = 100 * int(pow(2, filas -1))
 	interfaz.puntaje += puntaje
 	actualiz_punt_alto()
 
@@ -133,159 +236,108 @@ func actualiz_punt_alto():
 	if interfaz.puntaje > interfaz.puntaje_mas_alto:
 		interfaz.puntaje_mas_alto = interfaz.puntaje
 
-
-func mover_izq():
-	if posicion % cantColumnas > 0:
-		mover_formas(posicion - 1)
-func mover_der():
-	if posicion % cantColumnas < cantColumnas -1:
-		mover_formas(posicion + 1)
-
-
-
-#funcion para indicar donde poner o quitar una figura
-func posicionar_figura(indice, agregar_forma=false, poner=false, color=Color(0)):
-	var correcto=true
-	var tamanio=forma.coordenadas.size()
-	var distanciaOrigen=forma.coordenadas[0]
-	var y=0
-	#usaremos valores de x e y para analizar la grilla y ver si podemos situar una figura
-	
-	while y < tamanio && correcto:
-		for x in tamanio:
-			#si se detecta una posicion invalida, se saldra de los bucles
-			#y se devolvera un valor de falso
-			if forma.grilla[y][x]:
-				#esta variable se usa para establecer la posicion de la celda en la grilla donde queramos
-				#poner o quitar una figura
-				var posicion_en_grilla=indice+[y-distanciaOrigen]*cantColumnas+x+distanciaOrigen
-				#si se quiere poner una figura se usara poner como ture
-				if poner:
-					grilla[posicion_en_grilla]=true
-				elif posicion_en_grilla>=0:
-					var posicion_columna=indice%cantColumnas+x+distanciaOrigen
-					#comprobamos que la posicion a donde queremos poner la forma
-					#este contenida dentro de la grilla, y no fuera de la misma
-					if posicion_columna<0 or posicion_columna>=cantColumnas or posicion_en_grilla>=grilla.size() or grilla[posicion_en_grilla]:
-						#si esa posicion esta ocupada o no existe se retorna el valor de correcto como falso y se usa break para salir del bucle
-						correcto=!correcto
-						break
-						#en el caso de que todo salga bien y sea posible poner la figura, entonces se agrega la figura a la grilla
-					if agregar_forma:
-						interfaz.grilla.get_child(posicion_en_grilla).modulate=color
-		y+=1
-	return correcto
-	
-#funcion para agregar o quitar las figuras de la grilla
-func agregar_figura_a_grilla():
-	#true para posicionar la figura y false para que no se coloque automaticamente
-	posicionar_figura(posicion,true,false,forma.color)
-func quitar_figura_de_grilla():
-	posicionar_figura(posicion,false,true)
-	
-func iniciar_partida():
-	print("A jugar...")
-	estado=INICIADO
-	if _musica_esta_encendido():
-		_musica(INICIAR)
-	limpiar_grilla()
-	interfaz.reset_estad(interfaz.puntaje_mas_alto)
-	nueva_forma()
-
-
-#Agregar una nueva forma a la grilla al empezar el juego
-func nueva_forma():
-	if siguiente_forma:
-		forma = siguiente_forma
-	else:
-		forma = Formas.obtener_forma()
-	siguiente_forma = Formas.obtener_forma()
-	interfaz.sig_forma(siguiente_forma)
-	posicion = posicion_inic
-	agregar_figura_a_grilla()
-	subir_nivel()
-	
-#Subir de nivel
-func subir_nivel():
-	cuenta += 1
-	if cuenta % 10 ==0:
-		incrementar_nivel()
-
-func incrementar_nivel():
-	if interfaz.nivel < maximo_nivel:
-		interfaz.nivel += 1
-		$Tiker.set_wait_time(Velocidad_tick / interfaz.nivel)
- 
-
-	
 #Velocidad de desplazamiento de la figura
 func bajada_normal():
-	$Ticker.start(Velocidad_tick / interfaz.nivel)
-	
+	$Timer.start(VELOCIDAD_DE_CAIDA / interfaz.nivel)
+
 #Velocidades de caida
 func caida_suave():
-	$Ticker.stop()
-	$Ticker.start(Velocidad_tick / interfaz.nivel / velocidad_multiple)
+	$Timer.stop()
+	$Timer.start(VELOCIDAD_DE_CAIDA / interfaz.nivel / MULTIPLICADOR_DE_VEL)
 func caida_fuerte():
-	$Ticker.stop()
-	$Ticker.start(Velocidad_tick / maximo_nivel)
+	$Timer.stop()
+	$Timer.start(VELOCIDAD_DE_CAIDA / MAXIMO_NIVEL)
 	
 func _terminar_partida():
-	print("Perdiste pa")
-	estado=DETENIDO
-	$Ticker.stop()
+	print("SE ACABO EL JUEGO")
+
+	$Timer.stop()
+	$TickerIzquierdo.stop()
+	$TickerDerecho.stop()
+	interfaz.set_button_states(HABILITADO)
 	if _musica_esta_encendido():
 		_musica(DETENER)
-	
+	estado=DETENIDO
 
-
+#funcion para determinar despues de que cantidad de ticks se suelta otra figura
 func Tiempo():
 	var nueva_pos = posicion + cantColumnas
-	if mover_formas(nueva_pos):
+	if mover_forma(nueva_pos):
 		interfaz.puntaje += prima
 		actualiz_punt_alto()
 	else:
-		if nueva_pos <= posicion_fin:
+		if nueva_pos <= POS_FINAL:
 			_terminar_partida()
 		else:
 			bloc_forma_en_grilla()
 			chequear_filas()
 			nueva_forma()
+
 #chequear si las filas o columnas estan completas
 func chequear_filas():
-	var i = grilla.size() -1
-	var x =0
-	var filas = 0
+	var i = grilla.size() - 1
+	var x = 0
+	var nfilas = grilla.size() / cantColumnas-1
+	var filas = []
 	while i >= 0:
 		if grilla[i]:
 			x += 1
 			i -= 1
 			if x == cantColumnas:
-				filas += 1
+				filas.append(nfilas)
 				x=0
-			else:
-				i += x
-				x = 0 
-				if filas > 0:
-					remover_filas(i, filas)
-				filas = 0
-				i -= cantColumnas
-func remover_filas(i, filas):
-	agregar_puntaje(filas)
-	var num_celdas = filas * cantColumnas
-	for n in num_celdas:
-		interfaz.grilla.get_child(i + n + 1).modulate = Color(0)
+				nfilas-=1
+		else:
+			i += x
+			x = 0 
+			i-=cantColumnas
+			nfilas-=1
+	if filas.empty()==false:
+		remover_filas(filas)
+
+#funcion para remover filas
+func remover_filas( filas):
+	var filas_corridas=0
+	agregar_puntaje(filas.size())
 	pausa()
-	yield(get_tree().create_timer(0,3), "sinTiempo")
+
+	#TODO: Refactor sonido
+
+	yield(get_tree().create_timer(0,3), "timeout")
 	pausa(false)
-	var to = i + num_celdas
-	while i >= 0:
-		grilla[to] = grilla [i]
-		interfaz.grilla.get_child(to).modulate = interfaz.grilla.get_child(i).modulate
-		if i == 0:
-			grilla[i]=false
-			interfaz.grilla.get_child(i).modulate = Color(0)
-		i -= 1
-		to -= 1
+	elim_forma_de_grilla()
+	for nfilas in filas.size():	
+		for n in cantColumnas:
+			interfaz.grilla.get_child((filas[nfilas]+filas_corridas)*cantColumnas+n).modulate=Color(0)
+		var hacia=(filas[nfilas]+filas_corridas)*cantColumnas+cantColumnas-1
+		var desde=hacia-cantColumnas
+		while desde>=0:
+			grilla[hacia]=grilla[desde]
+			interfaz.grilla.get_child(hacia).modulate=interfaz.grilla.get_child(desde).modulate
+			if desde == 0 :
+				grilla[desde]=false
+				interfaz.grilla.get_child(desde).modulate=Color(0)
+			desde-=1
+			hacia-=1
+		filas_corridas+=1
+	agregar_forma_grilla()
+
+#Funciones movimiento figuras
+func mover_izq():
+	if posicion % cantColumnas < cantColumnas -1:
+		mover_forma(posicion + 1)
+func mover_der():
+	if posicion % cantColumnas > 0:
+		mover_forma(posicion - 1)
+
+#predefinidas de godot
+func _on_TickerIzquierdo_timeout():
+	$TickerIzquierdo.wait_time = DELAY
+	mover_izq()
+
+func _on_TickerDerecho_timeout():
+	$TickerDerecho.wait_time = DELAY
+	mover_der()
+
 func pausa(valor = true):
 	get_tree().paused = valor
