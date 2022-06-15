@@ -5,6 +5,7 @@
 [ext_resource path="res://imagenes/stars_background_resized.png" type="Texture" id=3]
 
 [node name="Interfaz" type="CenterContainer"]
+pause_mode = 2
 self_modulate = Color( 0.305882, 1, 0.627451, 1 )
 anchor_right = 1.0
 anchor_bottom = 1.0

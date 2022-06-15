@@ -1,8 +1,17 @@
 extends CenterContainer
 
-enum { DETENIDO, INICIADO, PAUSADO, DETENER, INICIAR, PAUSAR}
+## Explicacion estados
+## DETENIDO -> Estado inicial del juego (en menu, todavia no inicia)
+## INICIADO -> Cuando se toca nuevo juego, se esta jugando (fichas bajan, etc).
+## PAUSADO -> Indicar que el juego esta en pausa (se toco boton pausa)
+## INICIAR -> Se usa para iniciar la musica
+## PAUSAR -> Se usa para pausar la musica
+enum { DETENIDO, INICIADO, PAUSADO, INICIAR, PAUSAR}
 enum { ROTAR_DERECHA, ROTAR_IZQUIERDA}
 
+
+
+#Constantes de configuracion jugabilidad
 const DESHABILITADO = true
 const HABILITADO = false
 const MAXIMO_NIVEL = 100
@@ -14,8 +23,8 @@ const TIEMPO_DE_ESPERA = 0.15
 const DELAY = 0.05
 
 var interfaz
-var estado = DETENIDO
-var posicion_cancion = 0
+var estado = DETENIDO #se setea el estado inicial como detenido
+var posicion_cancion = 0 
 var grilla = [] #array que representa cada celda de la grilla
 var cantColumnas
 
@@ -77,7 +86,7 @@ func mover_forma(nueva_posicion, dir= null):
 	agregar_forma_grilla()
 	return ok
 
-#Rotal las formas
+#Rotar las formas
 func rotar(dir):
 	match dir:
 		ROTAR_IZQUIERDA:
@@ -151,6 +160,7 @@ func _button_pressed(nombre_boton):
 			else:
 				interfaz.set_button_text("Pausa", "Pausa") #TODO: refactor
 				estado=INICIADO
+				pausa(false) #despauso el juego
 				if _musica_esta_encendido():
 					_musica(INICIAR)
 				
@@ -256,7 +266,7 @@ func _terminar_partida():
 	$TickerDerecho.stop()
 	interfaz.set_button_states(HABILITADO)
 	if _musica_esta_encendido():
-		_musica(DETENER)
+		_musica(PAUSAR)
 	estado=DETENIDO
 
 #funcion para determinar despues de que cantidad de ticks se suelta otra figura
