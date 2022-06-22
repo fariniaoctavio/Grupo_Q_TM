@@ -45,10 +45,10 @@ func _ready():
 
 func iniciar_partida():
 	print("A jugar...")
+	
 	estado = INICIADO
 	posicion_cancion = 0.0
-	if _musica_esta_encendido():
-		_musica(INICIAR)
+
 	limpiar_grilla()
 	interfaz.reset_estad(interfaz.puntaje_mas_alto)
 	nueva_forma()
@@ -260,7 +260,7 @@ func caida_fuerte():
 	
 func _terminar_partida():
 	print("SE ACABO EL JUEGO")
-
+	$EfectoSonidoFinJuego.play()
 	$Timer.stop()
 	$TickerIzquierdo.stop()
 	$TickerDerecho.stop()
@@ -310,8 +310,8 @@ func remover_filas( filas):
 	var filas_corridas=0
 	agregar_puntaje(filas.size())
 	pausa()
-
-	#TODO: Refactor sonido
+	
+	$EfectoSonidoLinea.play()
 
 	yield(get_tree().create_timer(0,3), "timeout")
 	pausa(false)

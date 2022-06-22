@@ -1,8 +1,10 @@
-[gd_scene load_steps=4 format=2]
+[gd_scene load_steps=6 format=2]
 
 [ext_resource path="res://Interfaz.tscn" type="PackedScene" id=1]
 [ext_resource path="res://scripts/TetrisScript.gd" type="Script" id=2]
-[ext_resource path="res://Musica.mp3" type="AudioStream" id=3]
+[ext_resource path="res://sonidos/Musica.mp3" type="AudioStream" id=3]
+[ext_resource path="res://sonidos/270334__littlerobotsoundfactory__jingle-lose-01.wav" type="AudioStream" id=4]
+[ext_resource path="res://sonidos/270338__littlerobotsoundfactory__open-01.wav" type="AudioStream" id=5]
 
 [node name="Tetris" type="CenterContainer"]
 anchor_right = 1.0
@@ -17,6 +19,13 @@ margin_bottom = 800.0
 
 [node name="ReproductorMusica" type="AudioStreamPlayer" parent="."]
 stream = ExtResource( 3 )
+
+[node name="EfectoSonidoLinea" type="AudioStreamPlayer" parent="."]
+stream = ExtResource( 5 )
+
+[node name="EfectoSonidoFinJuego" type="AudioStreamPlayer" parent="."]
+stream = ExtResource( 4 )
+pitch_scale = 1.5
 
 [node name="Timer" type="Timer" parent="."]
 

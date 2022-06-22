@@ -225,7 +225,7 @@ margin_top = 314.0
 margin_right = 192.0
 margin_bottom = 354.0
 custom_colors/font_color = Color( 1, 1, 1, 1 )
-custom_colors/font_color_pressed = Color( 1, 0, 0, 1 )
+custom_colors/font_color_pressed = Color( 0.458824, 0.415686, 0.415686, 0.835294 )
 custom_fonts/font = SubResource( 11 )
 text = "Musica"
 
