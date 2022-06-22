@@ -188,15 +188,15 @@ func _input(accion):
 			caida_suave()
 		if accion.is_action_pressed("ui_accept"):
 			caida_fuerte()
-		if accion.is_action_pressed("ui_left"):
+		if accion.is_action_pressed("ui_right"):
 			mover_izq()
 			$TickerIzquierdo.start(TIEMPO_DE_ESPERA)
-		if accion.is_action_released("ui_left"):
+		if accion.is_action_released("ui_right"):
 			$TickerIzquierdo.stop()
-		if accion.is_action_pressed("ui_right"):
+		if accion.is_action_pressed("ui_left"):
 			mover_der()
 			$TickerDerecho.start(TIEMPO_DE_ESPERA)
-		if accion.is_action_released("ui_right"):
+		if accion.is_action_released("ui_left"):
 			$TickerDerecho.stop()
 		if accion.is_action_pressed("ui_up"):
 			if accion.shift:
