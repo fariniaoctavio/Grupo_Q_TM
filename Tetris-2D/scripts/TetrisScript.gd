@@ -161,7 +161,7 @@ func _button_pressed(nombre_boton):
 				interfaz.set_button_text("Pausa", "Pausa") #TODO: refactor
 				estado=INICIADO
 				pausa(false) #despauso el juego
-				if _musica_esta_encendido():
+				if !_musica_esta_encendido():
 					_musica(INICIAR)
 				
 		"Salir":
@@ -264,7 +264,7 @@ func _terminar_partida():
 	$Timer.stop()
 	$TickerIzquierdo.stop()
 	$TickerDerecho.stop()
-	interfaz.set_button_states(HABILITADO)
+	interfaz.setear_estados_de_botones(HABILITADO)
 	if _musica_esta_encendido():
 		_musica(PAUSAR)
 	estado=DETENIDO
