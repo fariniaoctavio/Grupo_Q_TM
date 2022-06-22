@@ -45,10 +45,10 @@ func _ready():
 
 func iniciar_partida():
 	print("A jugar...")
+	
 	estado = INICIADO
 	posicion_cancion = 0.0
-	if _musica_esta_encendido():
-		_musica(INICIAR)
+
 	limpiar_grilla()
 	interfaz.reset_estad(interfaz.puntaje_mas_alto)
 	nueva_forma()
@@ -161,7 +161,7 @@ func _button_pressed(nombre_boton):
 				interfaz.set_button_text("Pausa", "Pausa") #TODO: refactor
 				estado=INICIADO
 				pausa(false) #despauso el juego
-				if _musica_esta_encendido():
+				if !_musica_esta_encendido():
 					_musica(INICIAR)
 				
 		"Salir":
@@ -260,11 +260,11 @@ func caida_fuerte():
 	
 func _terminar_partida():
 	print("SE ACABO EL JUEGO")
-
+	$EfectoSonidoFinJuego.play()
 	$Timer.stop()
 	$TickerIzquierdo.stop()
 	$TickerDerecho.stop()
-	interfaz.set_button_states(HABILITADO)
+	interfaz.setear_estados_de_botones(HABILITADO)
 	if _musica_esta_encendido():
 		_musica(PAUSAR)
 	estado=DETENIDO
@@ -310,8 +310,8 @@ func remover_filas( filas):
 	var filas_corridas=0
 	agregar_puntaje(filas.size())
 	pausa()
-
-	#TODO: Refactor sonido
+	
+	$EfectoSonidoLinea.play()
 
 	yield(get_tree().create_timer(0,3), "timeout")
 	pausa(false)
